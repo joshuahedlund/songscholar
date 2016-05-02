@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Book;
 
 class SongRefController extends Controller
 {
@@ -15,7 +16,7 @@ class SongRefController extends Controller
      */
     public function index()
     {
-        //
+        return 'This will list the song references';
     }
 
     /**
@@ -25,7 +26,9 @@ class SongRefController extends Controller
      */
     public function create()
     {
-        //
+        $books = Book::all();
+	foreach($books as $book){$data['books'][$book->id]=$book->name;}
+        return view('songref.create',$data);
     }
 
     /**
@@ -36,7 +39,7 @@ class SongRefController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return var_dump($request);
     }
 
     /**
