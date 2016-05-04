@@ -13,9 +13,11 @@ class CreateSongsTable extends Migration
     public function up()
     {
         Schema::create('songs',function($table){
+           $table->engine = 'InnoDB';
+
            $table->increments('id');
            $table->string('name');
-           $table->integer('albumId')->unsigned();
+           $table->integer('album_id')->unsigned();
            $table->timestamps();
         });
     }

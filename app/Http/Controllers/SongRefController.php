@@ -16,7 +16,8 @@ class SongRefController extends Controller
      */
     public function index()
     {
-        return 'This will list the song references';
+        $songs = \App\Song::all();
+        return view('songref.index', ['songs' => $songs]);
     }
 
     /**
@@ -39,7 +40,25 @@ class SongRefController extends Controller
      */
     public function store(Request $request)
     {
-        return var_dump($request);
+        $this->validate($request, [
+             'song' => 'required',
+             'album' => 'required',
+             'artist' => 'required'
+        ]);
+
+        //Create the stuff
+        $artist = \App\Artist::firstOrCreate(array('name'=>$request->artist));
+        $artist->save();
+
+        $album = \App\Album::firstOrCreate(array('name'=>$request->album,'artist_id'=>$artist->id));
+        $album->artist_id = $artist->id;
+        $album->save();
+
+        $song = \App\Song::firstOrCreate(array('name'=>$request->song,'album_id'=>$album->id));
+        $song->album_id = $album->id;
+        $song->save();
+
+        return redirect('/songrefs');
     }
 
     /**

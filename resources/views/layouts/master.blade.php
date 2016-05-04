@@ -6,6 +6,8 @@
 </head>
 <body>
 <div class="container">
+@include('common.errors')
+
 @yield('content')
 </div>
 </body>

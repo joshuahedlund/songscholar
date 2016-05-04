@@ -6,16 +6,16 @@
 <h2>Add a Song Reference</h2>
 {{ Form::open(array('route' => 'songrefs.store')) }}
 <div class="form-group">
-  {{ Form::label('artists.name','Artist') }}
-  {{ Form::text('artists.name', null, array('class' => 'form-control')) }}
+  {{ Form::label('artist','Artist') }}
+  {{ Form::text('artist', null, array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
-  {{ Form::label('albums.name','Album') }}
-  {{ Form::text('albums.name', null, array('class' => 'form-control')) }}
+  {{ Form::label('album','Album') }}
+  {{ Form::text('album', null, array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
-  {{ Form::label('songs.name','Song') }}
-  {{ Form::text('songs.name', null, array('class' => 'form-control')) }}
+  {{ Form::label('song','Song') }}
+  {{ Form::text('song', null, array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
   {{ Form::label('songRefs.lyric','Lyric') }}

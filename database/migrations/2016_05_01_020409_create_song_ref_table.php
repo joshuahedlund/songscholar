@@ -14,13 +14,13 @@ class CreateSongRefTable extends Migration
     {
         Schema::create('songRefs',function($table){
             $table->increments('id');
-            $table->integer('songId')->unsigned();
-            $table->integer('passageId')->unsigned();
+            $table->integer('song_id')->unsigned();
+            $table->integer('passage_id')->unsigned();
             $table->text('lyric');
             $table->tinyInteger('order')->unsigned();
             $table->timestamps();
-            $table->index('songId');
-            $table->index('passageId');
+            $table->index('song_id');
+            $table->index('passage_id');
         });
     }
 

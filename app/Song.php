@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Song extends Model
 {
-    public function albumId(){
+    protected $fillable = ['name'];
+
+    public function album(){
         return $this->belongsTo('App\Album');
     }
 }

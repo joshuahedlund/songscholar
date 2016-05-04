@@ -13,10 +13,12 @@ class CreateAlbumsTable extends Migration
     public function up()
     {
         Schema::create('albums',function($table){
+           $table->engine = 'InnoDB';
+
            $table->increments('id');
            $table->string('name');
            $table->tinyInteger('year')->unsigned();
-           $table->integer('artistId')->unsigned();
+           $table->integer('artist_id')->unsigned();
            $table->timestamps();
         });
     }
