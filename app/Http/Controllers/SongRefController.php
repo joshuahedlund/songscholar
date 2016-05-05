@@ -27,6 +27,10 @@ class SongRefController extends Controller
      */
     public function create()
     {
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+
         $books = Book::all();
 	foreach($books as $book){$data['books'][$book->id]=$book->name;}
         return view('songref.create',$data);

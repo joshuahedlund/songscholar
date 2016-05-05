@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    //return view('welcome');
-    echo '<h1>Welcome To SongScholar</h1>';
-});
-
 Route::resource('songrefs','SongRefController');
+Route::auth();
+
+Route::get('/', 'HomeController@index');

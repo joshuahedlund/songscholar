@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('title', 'Song References')
 
@@ -10,6 +10,8 @@
             </div>
 
             <div class="panel-body">
+		<p>{{ HTML::linkAction('SongRefController@create','Add New Song Reference') }}</p>
+
                 <table class="table table-striped task-table">
 
                     <thead>
