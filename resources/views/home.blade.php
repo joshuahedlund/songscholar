@@ -25,6 +25,18 @@
                 </div>
             </div>
             @endif
+            
+            @if (count($passages)>0)
+            <div class="panel panel-default">
+                <div class="panel-heading">View References by Book</div>
+
+                <div class="panel-body">
+                @foreach ($passages as $passage)             
+                    <p>{{HTML::linkAction('BookController@index',$passage->book,array(str_replace(' ','-',$passage->book))) }}</p>
+                @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>

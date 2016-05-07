@@ -16,3 +16,4 @@ Route::auth();
 
 Route::get('/', 'HomeController@index');
 Route::get('artist/{name}', 'ArtistController@index');
+Route::get('book/{name}','BookController@index');

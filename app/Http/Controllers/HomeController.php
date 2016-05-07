@@ -27,7 +27,8 @@ class HomeController extends Controller
     public function index()
     {
         $artists = \App\Artist::orderBy('name')->get();
+        $passages = \App\Passage::select('book')->orderBy('book')->groupBy('book')->get();
         
-        return view('home', array('artists' => $artists));
+        return view('home', array('artists' => $artists, 'passages' => $passages));
     }
 }
