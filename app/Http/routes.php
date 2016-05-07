@@ -15,3 +15,4 @@ Route::resource('songrefs','SongRefController');
 Route::auth();
 
 Route::get('/', 'HomeController@index');
+Route::get('artist/{name}', 'ArtistController@index');

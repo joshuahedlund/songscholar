@@ -12,7 +12,7 @@ class Song extends Model
         return $this->belongsTo('App\Album');
     }
     
-    public function songRef(){
+    public function songRefs(){
         return $this->hasMany('App\SongRef');
     }
 }

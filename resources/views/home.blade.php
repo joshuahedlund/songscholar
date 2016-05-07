@@ -10,9 +10,21 @@
                 <div class="panel-heading">Welcome!</div>
 
                 <div class="panel-body">
-                    <p>This site is under construction…</p>
+                    <p>SongScholar is a database of song lyrics that reference Bible verses.</p>
                 </div>
             </div>
+            
+            @if (count($artists)>0)
+            <div class="panel panel-default">
+                <div class="panel-heading">View References by Artist</div>
+
+                <div class="panel-body">
+                @foreach ($artists as $artist)
+                    <p>{{HTML::linkAction('ArtistController@index',$artist->name,array(str_replace(' ','-',$artist->name))) }}</p>
+                @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>

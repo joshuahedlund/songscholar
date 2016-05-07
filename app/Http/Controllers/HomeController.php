@@ -26,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $artists = \App\Artist::orderBy('name')->get();
+        
+        return view('home', array('artists' => $artists));
     }
 }

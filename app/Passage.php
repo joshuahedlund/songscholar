@@ -8,7 +8,7 @@ class Passage extends Model
 {
     protected $fillable = ['book','chapter','verse','version','text'];
     
-    public function songRef() {
+    public function songRefs() {
         return $this->hasMany('App\SongRef');
     }
 }
