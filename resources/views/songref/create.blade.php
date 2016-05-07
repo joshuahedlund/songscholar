@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('title', 'Add a Song Reference')
 
@@ -18,19 +18,19 @@
   {{ Form::text('song', null, array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
-  {{ Form::label('songRefs.lyric','Lyric') }}
-  {{ Form::textarea('songRefs.lyric', null, array('class' => 'form-control', 'rows' => 3)) }}
+  {{ Form::label('lyric','Lyric') }}
+  {{ Form::textarea('lyric', null, array('class' => 'form-control', 'rows' => 3)) }}
 </div>
 <div class="form-group">
-  {{ Form::label('books.name','Passage') }}
+  {{ Form::label('book','Passage') }}
   <div>
-  {{ Form::select('books.name', $books) }}
+  {{ Form::select('book', $books) }}
   {{ Form::text('chapter', null) }} : {{ Form::text('verse',null) }}
   Version: {{ Form::text('version', null) }}
   </div>
 <div class="form-group">
-  {{ Form::label('passages.text','Text') }}
-  {{ Form::textarea('passages.text', null, array('class' => 'form-control', 'rows' => 3)) }}
+  {{ Form::label('text','Text') }}
+  {{ Form::textarea('text', null, array('class' => 'form-control', 'rows' => 3)) }}
 </div>
 
 </div>

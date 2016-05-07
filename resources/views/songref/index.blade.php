@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('title', 'Song References')
 
@@ -10,7 +10,9 @@
             </div>
 
             <div class="panel-body">
+                @if (!Auth::guest())
 		<p>{{ HTML::linkAction('SongRefController@create','Add New Song Reference') }}</p>
+                @endif
 
                 <table class="table table-striped task-table">
 

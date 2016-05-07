@@ -9,7 +9,7 @@ class Album extends Model
     protected $fillable = ['name'];
 
     public function songs(){
-	return $this->hasMany('Song');
+	return $this->hasMany('App\Song');
     }
 
     public function artist(){

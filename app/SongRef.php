@@ -6,11 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class SongRef extends Model
 {
-    public function passageId(){
+    protected $table = 'songRefs';
+    
+    protected $fillable = ['lyric'];
+    
+    public function passage(){
        return $this->belongsTo('App\Passage');
     }
 
-    public function songId(){
+    public function song(){
        return $this->belongsTo('App\Song');
     }
 }
