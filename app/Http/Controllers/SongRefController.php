@@ -62,9 +62,13 @@ class SongRefController extends Controller
         $song->album_id = $album->id;
         $song->save();
         
-        $passage = \App\Passage::firstOrCreate(array('book'=>$request->book,'chapter'=>$request->chapter,'verse'=>$request->verse,'version'=>$request->version));
-        $passage->text = $request->text;
+        $passage = \App\Passage::firstOrCreate(array('book'=>$request->book,'chapter'=>$request->chapter,'verse'=>$request->verse));
         $passage->save();
+        
+        $passageVersion = \App\PassageVersion::firstOrCreate(array('passage_id'=>$passage->id,'version'=>$request->version));
+        $passageVersion->passage_id = $passage->id;
+        $passageVersion->text = $request->text;
+        $passageVersion->save();
         
         $songRef = \App\SongRef::create(array('lyric'=>$request->lyric));
         $songRef->song_id = $song->id;

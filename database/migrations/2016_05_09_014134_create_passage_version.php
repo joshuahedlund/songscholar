@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePassageTable extends Migration
+class CreatePassageVersion extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreatePassageTable extends Migration
      */
     public function up()
     {
-        Schema::create('passages',function($table){
+        Schema::create('passageVersions',function($table){
            $table->increments('id');
-           $table->string('book',25);
-           $table->tinyInteger('chapter')->unsigned();
-           $table->tinyInteger('verse')->unsigned();
+           $table->integer('passage_id')->unsigned();
+           $table->string('version',20);
+           $table->text('text');
            $table->timestamps();
-           $table->index('book');
+           $table->index('passage_id');
         });
     }
 
@@ -29,6 +29,6 @@ class CreatePassageTable extends Migration
      */
     public function down()
     {
-        Schema::drop('passages');
+        Schema::drop('passageVersions');
     }
 }
