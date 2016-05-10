@@ -14,7 +14,7 @@ class ArtistController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($name)
-    {
+    {        
         $artist = \App\Artist::where('name',str_replace('-',' ',$name))->first();
         
         $artist->load(['albums.songs.songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/

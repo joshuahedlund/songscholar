@@ -15,12 +15,18 @@ class BookController extends Controller
      */
     public function index($name)
     {
-        $book = str_replace('-',' ',$name);
-        $passages = \App\Passage::where('book',$book)->get();
+        /*\DB::listen(function($sql) {
+            var_dump($sql->sql);
+            var_dump($sql->bindings);
+        });*/
         
-        $passages->load(['songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
+        $book = str_replace('-',' ',$name);
+        $passages = \App\Passage::where('book',$book)->first();
+        
+        $passages->load(['passageVersions.songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
             $songRefs = $q->get()->unique();
         }]);
+        //$passageV = $passages->passageVersions;
      
         //$songRefs = \App\Songref::with('song')->with('album')->with(['artist'=>function($query) use ($artist){$query->where('artists.id',$artist->id);}])->get();
         

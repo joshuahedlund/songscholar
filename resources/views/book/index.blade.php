@@ -19,6 +19,7 @@
                 </thead>
                 <tbody>
                 @foreach ($songRefs as $songRef)
+                <?php $passage = $songRef->passageVersion->passage; ?>
                     <tr>
                         <td class="table-text">
                             <div> @if($songRef->song && $songRef->song->album && $songRef->song->album->artist) {{$songRef->song->album->artist->name}} - {{ $songRef->song->name }} @endif </div>
@@ -29,11 +30,11 @@
                         </td>
 
                         <td>
-                            <div> @if($songRef->passage) {{$songRef->passage->book}} {{$songRef->passage->chapter}}:{{$songRef->passage->verse}} @endif </div>
+                            <div> @if($passage) {{$passage->book}} {{$passage->chapter}}:{{$passage->verse}} @endif </div>
                         </td>
                         
                         <td>
-                            <div> @if($songRef->passage) {{$songRef->passage->text}} @endif </div>
+                            <div> @if($songRef->passageVersion) {{$songRef->passageVersion->text}} @endif </div>
                         </td>
                     </tr>
                 @endforeach

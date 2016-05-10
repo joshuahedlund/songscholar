@@ -10,8 +10,8 @@ class SongRef extends Model
     
     protected $fillable = ['lyric'];
     
-    public function passage(){
-       return $this->belongsTo('App\Passage');
+    public function passageVersion(){
+       return $this->belongsTo('App\PassageVersion','passageVersion_id');
     }
 
     public function song(){

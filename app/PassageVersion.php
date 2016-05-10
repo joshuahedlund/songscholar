@@ -10,6 +10,10 @@ class PassageVersion extends Model
     
     protected $fillable = ['version','text'];
     
+    public function songRefs() {
+        return $this->hasMany('App\SongRef','passageVersion_id','id');
+    }
+    
     public function passage() {
         return $this->belongsTo('App\Passage');
     }

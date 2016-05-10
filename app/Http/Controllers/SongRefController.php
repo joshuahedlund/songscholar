@@ -72,7 +72,7 @@ class SongRefController extends Controller
         
         $songRef = \App\SongRef::create(array('lyric'=>$request->lyric));
         $songRef->song_id = $song->id;
-        $songRef->passage_id = $passage->id;
+        $songRef->passageVersion_id = $passageVersion->id;
         $songRef->save();
         
         if($songRef->id){
