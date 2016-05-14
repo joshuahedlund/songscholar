@@ -13,29 +13,24 @@
             <table class="table table-striped task-table">
                 <thead>
                         <th>Song</th>
-                        <th>Lyric</th>
+                        <th>Album</th>
                         <th>Passage</th>
-                        <th>Text</th>
                 </thead>
                 <tbody>
                 @foreach ($songRefs as $songRef)
                 <?php $passage = $songRef->passageVersion->passage; ?>
                     <tr>
                         <td class="table-text">
-                            <div> @if($songRef->song) {{ $songRef->song->name }} @endif </div>
+                            <div> @if($songRef->song) {{ HTML::linkAction('SongController@index',$songRef->song->name,$songRef->song->id) }} @endif </div>
                         </td>
                                 
                         <td>
-                            <div>{{ $songRef->lyric }}</div>
+                            <div>{{ $songRef->song->album->name }}</div>
                         </td>
 
                         <td>
                             <div> @if($passage) {{$passage->book}} {{$passage->chapter}}:{{$passage->verse}} @endif </div>
-                        </td>
-                        
-                        <td>
-                            <div> @if($songRef->passageVersion) {{$songRef->passageVersion->text}} @endif </div>
-                        </td>
+                        </td>                        
                     </tr>
                 @endforeach
                 </tbody>

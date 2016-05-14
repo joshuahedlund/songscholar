@@ -11,9 +11,16 @@
 |
 */
 
-Route::resource('songrefs','SongRefController');
 Route::auth();
 
 Route::get('/', 'HomeController@index');
+
 Route::get('artist/{name}', 'ArtistController@index');
+
 Route::get('book/{name}','BookController@index');
+
+Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
+
+Route::resource('songrefs','SongRefController');
+Route::get('songRef/{id}/editLyric/','SongRefController@editLyric');
+Route::post('songRef/{id}/updateLyric/',array('as'=>'songRef.updateLyric','uses'=>'SongRefController@updateLyric'));

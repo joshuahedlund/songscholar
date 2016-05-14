@@ -129,4 +129,25 @@ class SongRefController extends Controller
     {
         //
     }
+    
+    public function editLyric($songRefId){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $songRef = \App\SongRef::where('id',$songRefId)->first();
+        return view('song.editLyric',['songRef' => $songRef]);
+    }
+    
+    public function updateLyric($songRefId, Request $request){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $songRef = \App\SongRef::where('id',$songRefId)->first();
+        $songRef->lyric = $request->lyric;
+        $songRef->save();
+        
+        return redirect()->route('song',$songRef->song->id);
+    }
 }
