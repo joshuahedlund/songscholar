@@ -19,21 +19,24 @@
                 @foreach ($songRefs as $songRef)
                 <?php $passage = $songRef->passageVersion->passage; ?>
                     <tr>
-                        <td class="table-text">
-                            <div> {{$songRef->lyric }}</div>
-                            <p>[{{ HTML::linkAction('SongRefController@editLyric','correct this lyric',$songRef->id) }}]</p>
+                        <td class="col-xs-6">
+                            <div id="editLyric-{{$songRef->id}}"> 
+                                <?php echo nl2br($songRef->lyric); ?>
+                            @if (!Auth::guest())
+                            <p>[<a href="javascript:void(0);" onclick="ajaxEditLyric({{$songRef->id}});">correct this lyric</a>]</p>
+                            @endif
+                            </div>
+                            
                         </td>
                                 
-                        <td>
+                        <td class="col-xs-6">
                             <div> 
                                 <p>
-                                    <b>Verse:</b> @if($passage) {{$passage->book}} {{$passage->chapter}}:{{$passage->verse}} @endif
+                                    @if($passage) {{$passage->book}} {{$passage->chapter}}:{{$passage->verse}} @endif
+                                    @if(!Auth::guest()) [{{ HTML::linkAction('SongRefController@editPassage','correct this reference',$songRef->passageVersion->id) }}] @endif
                                 </p>
                                 <p>
-                                    <b>Best Match:</b> {{$songRef->passageVersion->version }}
-                                </p>
-                                <p>
-                                    {{$songRef->passageVersion->text}}
+                                    {{$songRef->passageVersion->text}} ({{$songRef->passageVersion->version }})
                                 </p>
                             </div>
                         </td>

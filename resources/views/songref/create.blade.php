@@ -25,8 +25,8 @@
   {{ Form::label('book','Passage') }}
   <div>
   {{ Form::select('book', $books) }}
-  {{ Form::text('chapter', null) }} : {{ Form::text('verse',null) }}
-  Version: {{ Form::text('version', null) }}
+  {{ Form::text('chapter', null, array('class'=>'xs')) }} : {{ Form::text('verse',null,array('class'=>'xs')) }}
+  Version: {{ Form::text('version', null, array('class'=>'xs')) }}
   </div>
 <div class="form-group">
   {{ Form::label('text','Text') }}

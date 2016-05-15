@@ -150,4 +150,40 @@ class SongRefController extends Controller
         
         return redirect()->route('song',$songRef->song->id);
     }
+    
+    public function editPassage($songRefId){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $data = array();
+        
+        $books = Book::orderBy('id')->get();
+	foreach($books as $book){$data['books'][$book->name]=$book->name;}
+        
+        $songRef = \App\SongRef::with('passageVersion.passage')->where('id',$songRefId)->first();
+        $data['songRef'] = $songRef;        
+        $data['pv'] = $songRef->passageVersion;
+        
+        return view('song.editPassage',$data);
+    }
+    
+    public function updatePassage($songRefId, Request $request){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $songRef = \App\SongRef::with('passageVersion.passage')->where('id',$songRefId)->first();
+        $passageVersion = $songRef->passageVersion;
+        $passageVersion->passage->book = $request->book;
+        $passageVersion->passage->chapter = $request->chapter;
+        $passageVersion->passage->verse = $request->verse;
+        $passageVersion->passage->save();
+
+        $passageVersion->text = $request->text;
+        $passageVersion->version = $request->version;
+        $passageVersion->save();
+        
+        return redirect()->route('song',$songRef->song->id);
+    }
 }

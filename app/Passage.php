@@ -11,4 +11,8 @@ class Passage extends Model
     public function passageVersions(){
         return $this->hasMany('App\PassageVersion','passage_id','id');
     }
+    
+    public function passageConcat(){
+        return $this->book.' '.$this->chapter.':'.$this->verse;
+    }
 }

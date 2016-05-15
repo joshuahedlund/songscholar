@@ -3,6 +3,9 @@
 <meta charset="utf-8">
 <title>@yield('title') - SongScholar</title>
 <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<style>
+input.xs{width:50px}
+</style>
 </head>
 <body>
 <div class="container">
@@ -69,6 +72,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    
+<script>
+function ajaxEditLyric($songRefId){
+    $.get('/songRef/'+$songRefId+'/editLyric',function(t){
+        $('#editLyric-'+$songRefId).html(t);
+    });
+}
+</script>    
 </body>
 </html>
