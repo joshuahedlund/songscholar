@@ -12,14 +12,14 @@
             @if(count($songRefs)>0)
             <table class="table table-striped task-table">
                 <thead>
-                        <th>Lyric</th>
-                        <th>Passage</th>
+                        <th class="col-xs-6">Lyric</th>
+                        <th class="col-xs-6">Passage</th>
                 </thead>
                 <tbody>
                 @foreach ($songRefs as $songRef)
                 <?php $passage = $songRef->passageVersion->passage; ?>
                     <tr>
-                        <td class="col-xs-6">
+                        <td>
                             <div id="editLyric-{{$songRef->id}}"> 
                                 <?php echo nl2br($songRef->lyric); ?>
                             @if (!Auth::guest())
@@ -29,14 +29,16 @@
                             
                         </td>
                                 
-                        <td class="col-xs-6">
-                            <div> 
+                        <td>
+                            <div id="editPassage-{{$songRef->id}}"> 
                                 <p>
                                     @if($passage) {{$passage->book}} {{$passage->chapter}}:{{$passage->verse}} @endif
-                                    @if(!Auth::guest()) [{{ HTML::linkAction('SongRefController@editPassage','correct this reference',$songRef->passageVersion->id) }}] @endif
+                                    @if(!Auth::guest())
+                                    [<a href="javascript:void(0);" onclick="ajaxEditPassage({{$songRef->id}});">correct this reference</a>]
+                                    @endif
                                 </p>
                                 <p>
-                                    {{$songRef->passageVersion->text}} ({{$songRef->passageVersion->version }})
+                                    <?php echo nl2br($songRef->passageVersion->text); ?> ({{$songRef->passageVersion->version }})
                                 </p>
                             </div>
                         </td>

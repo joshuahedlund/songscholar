@@ -31,7 +31,9 @@ input.xs{width:50px}
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li></li>
+                    @if (!Auth::guest())
+                    <li>{{HTML::linkAction('SongRefController@create','Add Reference')}}</li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -76,6 +78,11 @@ input.xs{width:50px}
 function ajaxEditLyric($songRefId){
     $.get('/songRef/'+$songRefId+'/editLyric',function(t){
         $('#editLyric-'+$songRefId).html(t);
+    });
+}
+function ajaxEditPassage($songRefId){
+    $.get('/songRef/'+$songRefId+'/editPassage',function(t){
+        $('#editPassage-'+$songRefId).html(t);
     });
 }
 </script>    

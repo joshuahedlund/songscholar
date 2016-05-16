@@ -70,19 +70,21 @@ class SongRefController extends Controller
         $passageVersion->text = $request->text;
         $passageVersion->save();
         
+        $user = $request->user();
+        
         $songRef = \App\SongRef::create(array('lyric'=>$request->lyric));
         $songRef->song_id = $song->id;
         $songRef->passageVersion_id = $passageVersion->id;
+        $songRef->createdBy = $user->id;
         $songRef->save();
         
         if($songRef->id){
-            $user = $request->user();
             $user->points += 10;
             $user->save();
             
             \Session::flash('flash_message','Song reference successfully added! +10 points!');
         }
-        return redirect('/songrefs');
+        return redirect('/');
     }
 
     /**
@@ -146,6 +148,7 @@ class SongRefController extends Controller
         
         $songRef = \App\SongRef::where('id',$songRefId)->first();
         $songRef->lyric = $request->lyric;
+        $songRef->updatedBy = $request->user->id;
         $songRef->save();
         
         return redirect()->route('song',$songRef->song->id);
@@ -183,6 +186,11 @@ class SongRefController extends Controller
         $passageVersion->text = $request->text;
         $passageVersion->version = $request->version;
         $passageVersion->save();
+        
+        $user = $request->user();
+        
+        $songRef->updatedBy = $user->id;
+        $songRef->save();
         
         return redirect()->route('song',$songRef->song->id);
     }

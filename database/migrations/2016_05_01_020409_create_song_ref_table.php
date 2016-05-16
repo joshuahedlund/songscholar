@@ -18,6 +18,8 @@ class CreateSongRefTable extends Migration
             $table->integer('passageVersion_id')->unsigned();
             $table->text('lyric');
             $table->tinyInteger('order')->unsigned();
+            $table->integer('createdBy')->unsigned();
+            $table->integer('updatedBy')->unsigned();
             $table->timestamps();
             $table->index('song_id');
             $table->index('passageVersion_id');

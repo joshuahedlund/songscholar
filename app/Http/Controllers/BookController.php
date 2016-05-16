@@ -21,7 +21,7 @@ class BookController extends Controller
         });*/
         
         $book = str_replace('-',' ',$name);
-        $passages = \App\Passage::where('book',$book)->first();
+        $passages = \App\Passage::where('book',$book)->get();
         
         $passages->load(['passageVersions.songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
             $songRefs = $q->get()->unique();

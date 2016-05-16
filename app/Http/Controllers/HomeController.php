@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-ini_set('xdebug.max_nesting_level', 500);
-
 class HomeController extends Controller
 {
     /**
