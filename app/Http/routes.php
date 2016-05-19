@@ -22,8 +22,13 @@ Route::get('book/{name}','BookController@index');
 Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
 
 Route::resource('songrefs','SongRefController');
-Route::get('songRef/{id}/editLyric/','SongRefController@editLyric');
-Route::post('songRef/{id}/updateLyric/',array('as'=>'songRef.updateLyric','uses'=>'SongRefController@updateLyric'));
-Route::get('songRef/{id}/editPassage/','SongRefController@editPassage');
-Route::post('songRef/{id}/updatePassage/',array('as'=>'songRef.updatePassage','uses'=>'SongRefController@updatePassage'));
+
+$ajaxRoutes = array('editLyric','updateLyric','indexPassage','editPassageReference','updatePassageReference');
+foreach($ajaxRoutes as $ajaxRoute){
+    Route::get('songRef/{id}/'.$ajaxRoute,array('as'=>'songRef.'.$ajaxRoute,'uses'=>'SongRefController@'.$ajaxRoute));
+}
+//Route::get('songRef/{id}/editLyric/','SongRefController@editLyric');
+//Route::post('songRef/{id}/updateLyric/',array('as'=>'songRef.updateLyric','uses'=>'SongRefController@updateLyric'));
+//Route::get('songRef/{id}/editPassageReference/','SongRefController@editPassageReference');
+//Route::post('songRef/{id}/updatePassageReference/',array('as'=>'songRef.updatePassageReference','uses'=>'SongRefController@updatePassageReference'));
 

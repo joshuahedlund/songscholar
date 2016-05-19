@@ -1,4 +1,4 @@
-{{ Form::open(array('route' => array('songRef.updatePassageReference',$songRef->id))) }}
+{{ Form::open(array('route' => array('songRef.updatePassageVersion',$songRef->id))) }}
 <div class="form-group">
   <div>
   {{ Form::select('book', $books, $pv->passage->book) }}
