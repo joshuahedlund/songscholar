@@ -5,6 +5,7 @@
 <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style>
 input.xs{width:50px}
+label{font-weight:normal;display:inline}
 </style>
 </head>
 <body>
@@ -87,6 +88,11 @@ function ajaxIndexPassage(songRefId){
 }
 function ajaxEditPassageReference(songRefId){
     $.get('/songRef/'+songRefId+'/editPassageReference',function(t){
+        $('#editPassage-'+songRefId).html(t);
+    });
+}
+function ajaxEditPassageVersion(songRefId){
+    $.get('/songRef/'+songRefId+'/editPassageVersion',function(t){
         $('#editPassage-'+songRefId).html(t);
     });
 }

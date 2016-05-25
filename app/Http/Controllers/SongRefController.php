@@ -146,9 +146,11 @@ class SongRefController extends Controller
            return redirect('login');
         }
         
+        $user = $request->user();
+        
         $songRef = \App\SongRef::where('id',$songRefId)->first();
         $songRef->lyric = $request->lyric;
-        $songRef->updatedBy = $request->user->id;
+        $songRef->updatedBy = $user->id;
         $songRef->save();
         
         return redirect()->route('song',$songRef->song->id);
@@ -196,6 +198,54 @@ class SongRefController extends Controller
         
         $songRef->updatedBy = $user->id;
         $songRef->save();
+        
+        return redirect()->route('song',$songRef->song->id);
+    }
+    
+    public function editPassageVersion($songRefId){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $songRef = \App\SongRef::with('passageVersion.passage')->where('id',$songRefId)->first();
+        $passage = $songRef->passageVersion->passage;
+        
+        $pvs = $passage->passageVersions;
+        
+        return view('song.editPassageVersion',['songRef' => $songRef, 'passage' => $passage, 'pvs' => $pvs]);        
+    }
+    
+    public function updatePassageVersion($songRefId, Request $request){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $songRef = \App\SongRef::with('passageVersion.passage')->where('id',$songRefId)->first();
+        $passage = $songRef->passageVersion->passage;
+        $user = $request->user();
+        
+        if($request->pvid>0){ //existing version
+            if($request->pvid!=$songRef->passageVersion->id){ //changed version
+                $songRef->passageVersion_id = $request->pvid;
+                $songRef->updatedBy = $user->id;
+                $songRef->save();
+                
+                \Session::flash('flash_message','Song reference successfully updated!');
+            }
+        }else if($request->pvid==0){ //new version
+            if(!empty($request->version) && !empty($request->text)){
+                $passageVersion = \App\PassageVersion::firstOrCreate(array('passage_id'=>$passage->id,'version'=>$request->version));
+                $passageVersion->passage_id = $passage->id;
+                $passageVersion->text = $request->text;
+                $passageVersion->save();
+                
+                $songRef->passageVersion_id = $passageVersion->id;
+                $songRef->updatedBy = $user->id;
+                $songRef->save();
+                
+                \Session::flash('flash_message','Song reference successfully updated! New version added!');
+            }
+        }
         
         return redirect()->route('song',$songRef->song->id);
     }
