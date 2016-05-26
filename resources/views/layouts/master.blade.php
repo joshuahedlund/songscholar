@@ -91,6 +91,11 @@ function ajaxEditPassageReference(songRefId){
         $('#editPassage-'+songRefId).html(t);
     });
 }
+function ajaxUpdatePassageReference(songRefId,frm){
+    $.post('/songRef/'+songRefId+'/updatePassageReference',$(frm).serialize(),function(t){
+        $('#editPassage-'+songRefId).html(t);
+    });
+}
 function ajaxEditPassageVersion(songRefId){
     $.get('/songRef/'+songRefId+'/editPassageVersion',function(t){
         $('#editPassage-'+songRefId).html(t);

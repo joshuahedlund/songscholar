@@ -184,22 +184,20 @@ class SongRefController extends Controller
         }
         
         $songRef = \App\SongRef::with('passageVersion.passage')->where('id',$songRefId)->first();
-        $passageVersion = $songRef->passageVersion;
+        /*$passageVersion = $songRef->passageVersion;
         $passageVersion->passage->book = $request->book;
         $passageVersion->passage->chapter = $request->chapter;
         $passageVersion->passage->verse = $request->verse;
-        $passageVersion->passage->save();
+        $passageVersion->passage->save();*/
 
-        $passageVersion->text = $request->text;
-        $passageVersion->version = $request->version;
-        $passageVersion->save();
+        //$user = $request->user();
         
-        $user = $request->user();
+        $passage = \App\Passage::firstOrCreate(array('book'=>$request->book,'chapter'=>$request->chapter,'verse'=>$request->verse));
+        $passage->save();
         
-        $songRef->updatedBy = $user->id;
-        $songRef->save();
+        $pvs = $passage->passageVersions;
         
-        return redirect()->route('song',$songRef->song->id);
+        return view('song.editPassageVersion',['songRef' => $songRef, 'passage' => $passage, 'pvs' => $pvs]);
     }
     
     public function editPassageVersion($songRefId){
@@ -235,7 +233,7 @@ class SongRefController extends Controller
         }else if($request->pvid==0){ //new version
             if(!empty($request->version) && !empty($request->text)){
                 $passageVersion = \App\PassageVersion::firstOrCreate(array('passage_id'=>$passage->id,'version'=>$request->version));
-                $passageVersion->passage_id = $passage->id;
+                $passageVersion->passage_id = $request->passageId; //may be new (if coming from editPassageReference) or same
                 $passageVersion->text = $request->text;
                 $passageVersion->save();
                 

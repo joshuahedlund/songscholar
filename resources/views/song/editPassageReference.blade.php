@@ -7,6 +7,6 @@
 
 </div>
   {{ Form::token() }}
-  {{ Form::submit('Update to choose version', array('class' => 'btn btn-default')) }}
+  {{ Form::button('Update to choose version', array('class' => 'btn btn-default', 'onclick' => 'ajaxUpdatePassageReference('.$songRef->id.',this.form);')) }}
   {{ Form::button('Cancel',array('class' => 'btn btn-default', 'onclick' => 'ajaxIndexPassage('.$songRef->id.');')) }}
 {{ Form::close() }}
