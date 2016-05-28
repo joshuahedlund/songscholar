@@ -101,6 +101,12 @@ function ajaxEditPassageVersion(songRefId){
         $('#editPassage-'+songRefId).html(t);
     });
 }
+function editPV(pvId){
+    var spanEdit = $('#editPv-'+pvId), spanVersion = $(spanEdit).find('.pv-version'), spanText = $(spanEdit).find('.pv-text');
+    var html = '<input type="text" name="pvversion'+pvId+'" class="xs" value="'+$(spanVersion).html()+'">';
+    html += ' : ' + '<input type="text" name="pvtext'+pvId+'" value="'+$(spanText).html()+'">';
+    $(spanEdit).html(html);
+}
 </script>    
 </body>
 </html>

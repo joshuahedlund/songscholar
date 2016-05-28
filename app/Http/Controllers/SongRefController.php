@@ -222,6 +222,18 @@ class SongRefController extends Controller
         $passage = $songRef->passageVersion->passage;
         $user = $request->user();
         
+        //Check for passageVersion updates
+        $pvs = $passage->passageVersions;
+        if(!empty($pvs)){
+            foreach($pvs as $pv){
+                if(!empty($request->input('pvversion'.$pv->id))){
+                    $pv->version = $request->input('pvversion'.$pv->id);
+                    $pv->text = $request->input('pvtext'.$pv->id);
+                    $pv->save();
+                }
+            }
+        }
+        
         if($request->pvid>0){ //existing version
             if($request->pvid!=$songRef->passageVersion->id){ //changed version
                 $songRef->passageVersion_id = $request->pvid;

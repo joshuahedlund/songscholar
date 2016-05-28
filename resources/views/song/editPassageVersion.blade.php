@@ -1,12 +1,19 @@
 {{ Form::open(array('route' => array('songRef.updatePassageVersion',$songRef->id))) }}
 {{ Form::hidden('passageId',$passage->id) }}
 <div class="form-group">
-    <p>Which version is the best for this lyric?</p>
+    <p>Which version of {{ $passage->passageConcat() }} is the best for this lyric?</p>
   @if(!empty($pvs))
   @foreach($pvs as $pv)
     <span id="pv-{{ $pv->id }}">
-    <?php $isThisPv = ($pv->id == $songRef->passageVersion->id); ?>
-    <label>{{ Form::radio('pvid',$pv->id,$isThisPv) }} {{ $pv->version }} : {{ $pv->text }}</label> [edit]
+        <?php $isThisPv = ($pv->id == $songRef->passageVersion->id); ?>
+        <label>
+            {{ Form::radio('pvid',$pv->id,$isThisPv) }}
+            <span id="editPv-{{ $pv->id }}">
+                <span class="pv-version">{{ $pv->version }}</span> : 
+                <span class="pv-text">{{ $pv->text }}</span>
+                [<a href="javascript:void(0);" onclick="editPV({{ $pv->id }})">edit</a>]
+            </span>
+        </label>
     </span>
     <br/>
   @endforeach
