@@ -31,8 +31,14 @@ class SongRefController extends Controller
            return redirect('login');
         }
 
+        $data['artists'][-1]='Select Artist';
+        $artists = \App\Artist::orderBy('name')->get();
+        foreach($artists as $artist){$data['artists'][$artist->id]=$artist->name;}
+        $data['artists'][0]='New...';
+        
         $books = Book::orderBy('id')->get();
 	foreach($books as $book){$data['books'][$book->name]=$book->name;}
+        
         return view('songref.create',$data);
     }
 

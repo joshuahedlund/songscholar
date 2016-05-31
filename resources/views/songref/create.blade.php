@@ -7,11 +7,14 @@
 {{ Form::open(array('route' => 'songrefs.store')) }}
 <div class="form-group">
   {{ Form::label('artist','Artist') }}
-  {{ Form::text('artist', null, array('class' => 'form-control')) }}
+  {{ Form::select('artist', $artists) }}
+  {{ Form::text('artistname', null, array('class' => 'form-control','style' => 'display:none;')) }}
 </div>
 <div class="form-group">
-  {{ Form::label('album','Album') }}
-  {{ Form::text('album', null, array('class' => 'form-control')) }}
+  {{ Form::label('album','Album (optional)') }}
+  <span id="albumSpan">
+    {{ Form::text('album', null, array('class' => 'form-control')) }}
+  </span>
 </div>
 <div class="form-group">
   {{ Form::label('song','Song') }}

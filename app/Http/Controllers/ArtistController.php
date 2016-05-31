@@ -31,4 +31,15 @@ class ArtistController extends Controller
         
         return view('artist.index', ['artist' => $artist, 'songRefs' => $songRefs]);
     }
+    
+    public function selectAlbums($artistId){
+        $data['albums'][-1]='Select Album';
+        $albums = \App\Album::where('artist_id',$artistId)->get();
+        foreach($albums as $album){
+            $data['albums'][$album->id]=$album->name;
+        }
+        $data['albums'][0]='New...';
+        
+        return view('artist.selectAlbums',$data);
+    }
 }

@@ -76,6 +76,28 @@ label{font-weight:normal;display:inline}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script>
+//Creating song references
+$('#artist').change(function(){
+    if(this.value==0){
+        $(this.form.artistname).show();
+    }else{
+        $(this.form.artistname).hide();
+    }
+    loadAlbumsByArtist(this.value);
+});
+function loadAlbumsByArtist(artistId){
+    if(artistId>0){
+        $.get('/artist/'+artistId+'/selectAlbums',function(t){
+            $('#albumSpan').html(t);
+        });
+    }else{
+        $('#album').hide();
+        $($('#album')[0].form.albumname).show();
+    }
+}
+
+
+//Editing existing song references
 function ajaxEditLyric(songRefId){
     $.get('/songRef/'+songRefId+'/editLyric',function(t){
         $('#editLyric-'+songRefId).html(t);
