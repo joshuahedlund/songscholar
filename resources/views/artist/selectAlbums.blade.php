@@ -1,1 +1,1 @@
-{{ Form::select('albums',$albums) }}
+{{ Form::select('album',$albums) }}

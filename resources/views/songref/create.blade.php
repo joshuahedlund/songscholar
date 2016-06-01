@@ -13,12 +13,14 @@
 <div class="form-group">
   {{ Form::label('album','Album (optional)') }}
   <span id="albumSpan">
-    {{ Form::text('album', null, array('class' => 'form-control')) }}
   </span>
+  {{ Form::text('albumname', null, array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
   {{ Form::label('song','Song') }}
-  {{ Form::text('song', null, array('class' => 'form-control')) }}
+  <span id="songSpan">
+  </span>
+  {{ Form::text('songname', null, array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
   {{ Form::label('lyric','Lyric') }}

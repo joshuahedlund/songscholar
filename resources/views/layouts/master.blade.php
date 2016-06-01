@@ -77,23 +77,65 @@ label{font-weight:normal;display:inline}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script>
 //Creating song references
-$('#artist').change(function(){
-    if(this.value==0){
-        $(this.form.artistname).show();
-    }else{
-        $(this.form.artistname).hide();
-    }
-    loadAlbumsByArtist(this.value);
+$(function(){
+    attachArtistChange($('#artist'));
 });
+function attachArtistChange(artist){
+    $(artist).change(function(){
+        if(this.value==0){ //new
+            $(this.form.artistname).show();
+            $(this.form.albumname).show();      $(this.form.album).hide();
+        }else{ //select or existing
+            $(this.form.artistname).hide();
+            $(this.form.albumname).hide();
+        }
+        $(this.form.songname).show();
+        $(this.form.song).hide();
+        loadAlbumsByArtist(this.value);
+    });
+}
 function loadAlbumsByArtist(artistId){
     if(artistId>0){
         $.get('/artist/'+artistId+'/selectAlbums',function(t){
             $('#albumSpan').html(t);
+            attachAlbumChange($('#albumSpan').find('select'));
         });
-    }else{
+    }else{ //new or select
         $('#album').hide();
         $($('#album')[0].form.albumname).show();
     }
+}
+function attachAlbumChange(album){
+    $(album).change(function(){
+        if(this.value==0){
+            $(this.form.albumname).show();
+            $(this.form.songname).show();       $(this.form.song).hide();
+        }else{ //select or existing
+            $(this.form.albumname).hide();
+            $(this.form.songname).hide();
+        }
+        loadSongsByAlbum(this.value);
+    });
+}
+function loadSongsByAlbum(albumId){
+    if(albumId>0){
+        $.get('/artist/'+albumId+'/selectSongsByAlbum',function(t){
+            $('#songSpan').html(t);
+            attachSongChange($('#songSpan').find('select'));
+        });
+    }else{
+        $('#song').hide();
+        $($('#song')[0].form.songname).show();
+    }
+}
+function attachSongChange(song){
+    $(song).change(function(){
+        if(this.value==0){
+            $(this.form.songname).show();
+        }else{
+            $(this.form.songname).hide();
+        }
+    });
 }
 
 
