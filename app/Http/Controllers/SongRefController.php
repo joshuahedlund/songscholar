@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Book;
+use DB;
 
 class SongRefController extends Controller
 {
@@ -31,14 +31,20 @@ class SongRefController extends Controller
            return redirect('login');
         }
 
+        //Get data for default create form
         $data['artists'][-1]='Select Artist';
         $artists = \App\Artist::orderBy('name')->get();
         foreach($artists as $artist){$data['artists'][$artist->id]=$artist->name;}
         $data['artists'][0]='New...';
         
-        $books = Book::orderBy('id')->get();
+        $data['books'][-1]='Select Book';
+        $books = \App\Book::orderBy('id')->get();
 	foreach($books as $book){$data['books'][$book->name]=$book->name;}
         
+        //Dummy fill-in to be replaced when user selects book
+        $data['chapters'][-1]='Ch';
+        $data['verses'][-1]='V';
+            
         return view('songref.create',$data);
     }
 
@@ -174,7 +180,7 @@ class SongRefController extends Controller
         
         $data = array();
         
-        $books = Book::orderBy('id')->get();
+        $books = \App\Book::orderBy('id')->get();
 	foreach($books as $book){$data['books'][$book->name]=$book->name;}
         
         $songRef = \App\SongRef::with('passageVersion.passage')->where('id',$songRefId)->first();

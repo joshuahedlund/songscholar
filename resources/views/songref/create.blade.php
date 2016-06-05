@@ -30,12 +30,13 @@
   {{ Form::label('book','Passage') }}
   <div>
   {{ Form::select('book', $books) }}
-  {{ Form::text('chapter', null, array('class'=>'xs')) }} : {{ Form::text('verse',null,array('class'=>'xs')) }}
-  Version: {{ Form::text('version', null, array('class'=>'xs')) }}
-  </div>
-<div class="form-group">
-  {{ Form::label('text','Text') }}
-  {{ Form::textarea('text', null, array('class' => 'form-control', 'rows' => 3)) }}
+  <span id="chapterSpan">
+    {{ Form::select('chapter', $chapters, null, array('id'=>'chapter')) }} 
+  </span>
+  : 
+  <span id="verseSpan">
+    {{ Form::select('verse', $verses) }}
+  </span>
 </div>
 
 </div>

@@ -79,6 +79,7 @@ label{font-weight:normal;display:inline}
 //Creating song references
 $(function(){
     attachArtistChange($('#artist'));
+    attachBookChange($('#book'));
 });
 function attachArtistChange(artist){
     $(artist).change(function(){
@@ -91,10 +92,10 @@ function attachArtistChange(artist){
         }
         $(this.form.songname).show();
         $(this.form.song).hide();
-        loadAlbumsByArtist(this.value);
+        loadAlbumsByArtist(this.value,this.form);
     });
 }
-function loadAlbumsByArtist(artistId){
+function loadAlbumsByArtist(artistId,frm){
     if(artistId>0){
         $.get('/artist/'+artistId+'/selectAlbums',function(t){
             $('#albumSpan').html(t);
@@ -102,7 +103,7 @@ function loadAlbumsByArtist(artistId){
         });
     }else{ //new or select
         $('#album').hide();
-        $($('#album')[0].form.albumname).show();
+        $(frm.albumname).show();
     }
 }
 function attachAlbumChange(album){
@@ -114,10 +115,10 @@ function attachAlbumChange(album){
             $(this.form.albumname).hide();
             $(this.form.songname).hide();
         }
-        loadSongsByAlbum(this.value);
+        loadSongsByAlbum(this.value,this.form);
     });
 }
-function loadSongsByAlbum(albumId){
+function loadSongsByAlbum(albumId,frm){
     if(albumId>0){
         $.get('/artist/'+albumId+'/selectSongsByAlbum',function(t){
             $('#songSpan').html(t);
@@ -125,7 +126,7 @@ function loadSongsByAlbum(albumId){
         });
     }else{
         $('#song').hide();
-        $($('#song')[0].form.songname).show();
+        $(frm.songname).show();
     }
 }
 function attachSongChange(song){
@@ -136,6 +137,26 @@ function attachSongChange(song){
             $(this.form.songname).hide();
         }
     });
+}
+function attachBookChange(book){
+    $(book).change(function(){
+        loadChaptersByBook(this.value);
+    });
+}
+function loadChaptersByBook(bookName){
+    if(bookName!='-1'){
+        $.get('/book/'+encodeURIComponent(bookName)+'/maxChapters',function(t){
+            var maxChapters=t*1;
+            if(t>0){
+                var ch=$('#chapter');
+                ch.find('option').remove(); //clear existing selects
+                ch.append($('<option/>').val(-1).text('Ch')); //build new list up to the max
+                for(var i=1;i<=maxChapters;i++){
+                    ch.append($('<option/>').val(i).text(i));
+                }
+            }
+        });
+    }
 }
 
 

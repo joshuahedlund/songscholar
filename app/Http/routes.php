@@ -22,6 +22,7 @@ foreach($ajaxGetRoutes as $ajaxRoute){
 }
 
 Route::get('book/{name}','BookController@index');
+Route::get('book/{name}/maxChapters','BookController@maxChapters');
 
 Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
 

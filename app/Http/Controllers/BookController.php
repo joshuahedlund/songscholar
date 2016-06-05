@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use DB;
 
 class BookController extends Controller
 {
@@ -37,5 +38,10 @@ class BookController extends Controller
         
         
         return view('book.index', ['book' => $book, 'songRefs' => $songRefs]);
+    }
+    
+    public function maxChapters($name){
+        $maxChapter = DB::table('passages')->where('book',$name)->max('chapter');
+        return $maxChapter;
     }
 }
