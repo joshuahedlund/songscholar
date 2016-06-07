@@ -35,7 +35,7 @@
   </span>
   : 
   <span id="verseSpan">
-    {{ Form::select('verse', $verses) }}
+    {{ Form::select('verse', $verses, null, array('id'=>'verse')) }}
   </span>
 </div>
 

@@ -40,8 +40,13 @@ class BookController extends Controller
         return view('book.index', ['book' => $book, 'songRefs' => $songRefs]);
     }
     
-    public function maxChapters($name){
-        $maxChapter = DB::table('passages')->where('book',$name)->max('chapter');
+    public function numChapters($bookName){
+        $maxChapter = DB::table('passages')->where('book',$bookName)->max('chapter');
         return $maxChapter;
+    }
+    
+    public function numVerses($bookName,$ch){
+        $maxVerse = DB::table('passages')->where('book',$bookName)->where('chapter',$ch)->max('verse');
+        return $maxVerse;
     }
 }
