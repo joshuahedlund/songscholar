@@ -95,6 +95,19 @@ function loadVersesByChapter(bookName,ch){
         });
     }
 }
+function attachVerseChange(verse){
+    $(verse).change(function(){
+        ajaxEditPassageVersionFields(this);
+    });
+}
+function ajaxEditPassageVersionFields(verse){
+    if(verse.value!='-1'){
+        var frm = verse.form,bookName=frm.book.value,ch=frm.chapter.value,v=frm.verse.value;
+        $.get('/book/'+encodeURIComponent(bookName)+'/'+ch+'/'+v+'/editPassageVersionFields',function(t){
+            $('#editPassageVersionFields').html(t);
+        });
+    }
+}
 
 
 //Editing existing song references
@@ -136,4 +149,5 @@ $(function(){
     attachArtistChange($('#artist'));
     attachBookChange($('#book'));
     attachChapterChange($('#chapter'));
+    attachVerseChange($('#verse'));
 });

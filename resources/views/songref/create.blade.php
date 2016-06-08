@@ -38,6 +38,9 @@
     {{ Form::select('verse', $verses, null, array('id'=>'verse')) }}
   </span>
 </div>
+<div class="form-group" id="editPassageVersionFields">
+
+</div>
 
 </div>
   {{ Form::token() }}

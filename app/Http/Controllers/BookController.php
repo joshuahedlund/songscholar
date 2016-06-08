@@ -49,4 +49,16 @@ class BookController extends Controller
         $maxVerse = DB::table('passages')->where('book',$bookName)->where('chapter',$ch)->max('verse');
         return $maxVerse;
     }
+    
+    /* creating a song reference: after choosing a verse, populate the texts */
+    public function editPassageVersionFields($bookName,$ch,$v){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $passage = \App\Passage::where('book',$bookName)->where('chapter',$ch)->where('verse',$v)->first();
+        $pvs = $passage->passageVersions;
+        
+        return view('song.editPassageVersionFields',['passage' => $passage, 'pvs' => $pvs]);
+    }
 }

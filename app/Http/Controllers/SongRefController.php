@@ -212,6 +212,7 @@ class SongRefController extends Controller
         return view('song.editPassageVersion',['songRef' => $songRef, 'passage' => $passage, 'pvs' => $pvs]);
     }
     
+    /* editing a song reference: correct this version - populate the texts */
     public function editPassageVersion($songRefId){
         if(!\Auth::check()){
            return redirect('login');
@@ -225,6 +226,7 @@ class SongRefController extends Controller
         return view('song.editPassageVersion',['songRef' => $songRef, 'passage' => $passage, 'pvs' => $pvs]);        
     }
     
+    /* editing a song reference: submitting form for correct this version */
     public function updatePassageVersion($songRefId, Request $request){
         if(!\Auth::check()){
            return redirect('login');
