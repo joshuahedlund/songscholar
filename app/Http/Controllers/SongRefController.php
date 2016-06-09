@@ -56,37 +56,55 @@ class SongRefController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
              'song' => 'required',
              'album' => 'required',
              'artist' => 'required'
-        ]);
+        ]);*/
 
         //Create the stuff
-        $artist = \App\Artist::firstOrCreate(array('name'=>$request->artist));
-        $artist->save();
-
-        $album = \App\Album::firstOrCreate(array('name'=>$request->album,'artist_id'=>$artist->id));
+        if(!empty($request->artistname)){
+            $artist = \App\Artist::firstOrCreate(array('name'=>$request->artistname));
+            $artist->save();
+        }else{
+            $artist = \App\Artist::where(array('id'=>$request->artist))->first();
+        }
+        
+        if(!empty($request->albumname)){
+            $album = \App\Album::firstOrCreate(array('name'=>$request->albumname,'artist_id'=>$artist->id));
+        }else{
+            $album = \App\Album::where(array('id'=>$request->album,'artist_id'=>$artist->id))->first();
+        }
         $album->artist_id = $artist->id;
         $album->save();
 
-        $song = \App\Song::firstOrCreate(array('name'=>$request->song,'album_id'=>$album->id));
+        if(!empty($request->songname)){
+            $song = \App\Song::firstOrCreate(array('name'=>$request->songname,'album_id'=>$album->id));
+        }else{
+            $song = \App\Song::where(array('name'=>$request->song,'album_id'=>$album->id))->first();
+        }
         $song->album_id = $album->id;
         $song->save();
         
-        $passage = \App\Passage::firstOrCreate(array('book'=>$request->book,'chapter'=>$request->chapter,'verse'=>$request->verse));
-        $passage->save();
+        $passage = \App\Passage::where(array('book'=>$request->book,'chapter'=>$request->chapter,'verse'=>$request->verse))->first();
         
-        $passageVersion = \App\PassageVersion::firstOrCreate(array('passage_id'=>$passage->id,'version'=>$request->version));
-        $passageVersion->passage_id = $passage->id;
-        $passageVersion->text = $request->text;
-        $passageVersion->save();
+        //Check for passageVersion updates
+        $this->checkForPassageVersionUpdates($passage, $request);
+        
+        if($request->pvid>0){ //existing version
+            $pvid = $request->pvid;
+        }else if($request->pvid==0){ //new version
+            if(!empty($request->version) && !empty($request->text)){
+                $passageVersion = $this->insertNewPassageVersion($passage, $request);
+                $pvid = $passageVersion->id;
+            }
+        }
         
         $user = $request->user();
         
         $songRef = \App\SongRef::create(array('lyric'=>$request->lyric));
         $songRef->song_id = $song->id;
-        $songRef->passageVersion_id = $passageVersion->id;
+        $songRef->passageVersion_id = $pvid;
         $songRef->createdBy = $user->id;
         $songRef->save();
         
@@ -237,16 +255,7 @@ class SongRefController extends Controller
         $user = $request->user();
         
         //Check for passageVersion updates
-        $pvs = $passage->passageVersions;
-        if(!empty($pvs)){
-            foreach($pvs as $pv){
-                if(!empty($request->input('pvversion'.$pv->id))){
-                    $pv->version = $request->input('pvversion'.$pv->id);
-                    $pv->text = $request->input('pvtext'.$pv->id);
-                    $pv->save();
-                }
-            }
-        }
+        $this->checkForPassageVersionUpdates($passage, $request);
         
         if($request->pvid>0){ //existing version
             if($request->pvid!=$songRef->passageVersion->id){ //changed version
@@ -258,10 +267,7 @@ class SongRefController extends Controller
             }
         }else if($request->pvid==0){ //new version
             if(!empty($request->version) && !empty($request->text)){
-                $passageVersion = \App\PassageVersion::firstOrCreate(array('passage_id'=>$passage->id,'version'=>$request->version));
-                $passageVersion->passage_id = $request->passageId; //may be new (if coming from editPassageReference) or same
-                $passageVersion->text = $request->text;
-                $passageVersion->save();
+                $passageVersion = $this->insertNewPassageVersion($passage, $request);
                 
                 $songRef->passageVersion_id = $passageVersion->id;
                 $songRef->updatedBy = $user->id;
@@ -272,5 +278,28 @@ class SongRefController extends Controller
         }
         
         return redirect()->route('song',$songRef->song->id);
+    }
+    
+    //Functions that are used for both creating new references and editing existing ones
+    public function checkForPassageVersionUpdates($passage, Request $request){
+        $pvs = $passage->passageVersions;
+        if(!empty($pvs)){
+            foreach($pvs as $pv){
+                if(!empty($request->input('pvversion'.$pv->id))){
+                    $pv->version = $request->input('pvversion'.$pv->id);
+                    $pv->text = $request->input('pvtext'.$pv->id);
+                    $pv->save();
+                }
+            }
+        }
+    }
+    
+    public function insertNewPassageVersion($passage, Request $request){
+        $passageVersion = \App\PassageVersion::firstOrCreate(array('passage_id'=>$passage->id,'version'=>$request->version));
+        $passageVersion->passage_id = $request->passageId; //may be new (if coming from editPassageReference) or same
+        $passageVersion->text = $request->text;
+        $passageVersion->save();
+        
+        return $passageVersion;
     }
 }
