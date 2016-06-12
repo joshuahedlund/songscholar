@@ -296,7 +296,7 @@ class SongRefController extends Controller
     
     public function insertNewPassageVersion($passage, Request $request){
         $passageVersion = \App\PassageVersion::firstOrCreate(array('passage_id'=>$passage->id,'version'=>$request->version));
-        $passageVersion->passage_id = $request->passageId; //may be new (if coming from editPassageReference) or same
+        $passageVersion->passage_id = $passage->id; //may be new (if coming from editPassageReference) or same
         $passageVersion->text = $request->text;
         $passageVersion->save();
         

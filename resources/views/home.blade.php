@@ -26,13 +26,16 @@
             </div>
             @endif
             
-            @if (count($passages)>0)
+            @if (count($books)>0)
             <div class="panel panel-default">
                 <div class="panel-heading">View References by Book</div>
 
                 <div class="panel-body">
-                @foreach ($passages as $passage)             
-                    <p>{{HTML::linkAction('BookController@index',$passage->book,array(str_replace(' ','-',$passage->book))) }}</p>
+                @foreach ($books as $book)             
+                    <p>
+                        {{HTML::linkAction('BookController@index',$book->bookname,array(str_replace(' ','-',$book->bookname))) }} 
+                        ({{ $book->cnt }})
+                    </p>
                 @endforeach
                 </div>
             </div>
