@@ -28,7 +28,6 @@
 </div>
 <div class="form-group">
   {{ Form::label('book','Passage') }}
-  <div>
   {{ Form::select('book', $books) }}
   <span id="chapterSpan">
     {{ Form::select('chapter', $chapters, null, array('id'=>'chapter')) }} 
@@ -42,7 +41,6 @@
 
 </div>
 
-</div>
   {{ Form::token() }}
   {{ Form::submit(null, array('class' => 'btn btn-default')) }}
 {{ Form::close() }}

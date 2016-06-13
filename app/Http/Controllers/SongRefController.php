@@ -205,6 +205,14 @@ class SongRefController extends Controller
         $data['songRef'] = $songRef;        
         $data['pv'] = $songRef->passageVersion;
         
+        $passage = $songRef->passageVersion->passage;
+        
+        $maxChapter = \App\Book::numChapters($passage->book);
+        for($i=1;$i<=$maxChapter;$i++){$data['chapters'][$i]=$i;}
+        
+        $maxVerse = \App\Book::numVerses($passage->book,$passage->chapter);
+        for($i=1;$i<=$maxVerse;$i++){$data['verses'][$i]=$i;}
+        
         return view('song.editPassageReference',$data);
     }
     

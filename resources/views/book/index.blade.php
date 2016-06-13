@@ -23,8 +23,9 @@
                             <div>
                                 <?php echo nl2br($songRef->lyric); ?>
                                 @if($songRef->song && $songRef->song->album && $songRef->song->album->artist) 
-                                    <br/>({{$songRef->song->album->artist->name}} - 
-                                    {{ $songRef->song->name }})
+                                    <br/>(
+                                    {{ HTML::linkAction('SongController@index',$songRef->song->album->artist->name.' - '.$songRef->song->name,$songRef->song->id) }}
+                                    )
                                 @endif
                             
                             </div>

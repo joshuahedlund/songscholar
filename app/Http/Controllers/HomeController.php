@@ -29,8 +29,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //Get artists
-        $artists = \App\Artist::orderBy('name')->get();
+        //Get artists with count of references per artist
+        $artists = DB::table('songRefs')
+            ->join('songs','songRefs.song_id','=','songs.id')
+            ->join('albums','songs.album_id','=','albums.id')
+            ->join('artists','albums.artist_id','=','artists.id')
+            ->select(DB::raw('count(*) as cnt, artists.name as artistname'))
+            ->groupBy('artists.id')
+            ->orderBy('artists.name')
+            ->get();
         
         //Get books with count of song references per book
         $books = DB::table('songRefs')

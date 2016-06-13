@@ -2,9 +2,13 @@
 <div class="form-group">
   <div>
   {{ Form::select('book', $books, $pv->passage->book) }}
-  {{ Form::text('chapter', $pv->passage->chapter, array('class'=>'xs')) }} : {{ Form::text('verse',$pv->passage->verse, array('class'=>'xs')) }}
-  </div>
-
+  <span id="chapterSpan">
+    {{ Form::select('chapter', $chapters, $pv->passage->chapter, array('id'=>'chapter')) }} 
+  </span>
+  : 
+  <span id="verseSpan">
+    {{ Form::select('verse', $verses, $pv->passage->verse, array('id'=>'verse')) }}
+  </span>
 </div>
   {{ Form::token() }}
   {{ Form::button('Update to choose version', array('class' => 'btn btn-default', 'onclick' => 'ajaxUpdatePassageReference('.$songRef->id.',this.form);')) }}

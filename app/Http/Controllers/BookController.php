@@ -41,12 +41,12 @@ class BookController extends Controller
     }
     
     public function numChapters($bookName){
-        $maxChapter = DB::table('passages')->where('book',$bookName)->max('chapter');
+        $maxChapter = \App\Book::numChapters($bookName);
         return $maxChapter;
     }
     
     public function numVerses($bookName,$ch){
-        $maxVerse = DB::table('passages')->where('book',$bookName)->where('chapter',$ch)->max('verse');
+        $maxVerse = \App\Book::numVerses($bookName,$ch);
         return $maxVerse;
     }
     

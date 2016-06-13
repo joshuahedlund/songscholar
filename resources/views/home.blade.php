@@ -20,7 +20,10 @@
 
                 <div class="panel-body">
                 @foreach ($artists as $artist)
-                    <p>{{HTML::linkAction('ArtistController@index',$artist->name,array(str_replace(' ','-',$artist->name))) }}</p>
+                    <p>
+                        {{HTML::linkAction('ArtistController@index',$artist->artistname,array(str_replace(' ','-',$artist->artistname))) }}
+                        ({{ $artist->cnt }})
+                    </p>
                 @endforeach
                 </div>
             </div>
