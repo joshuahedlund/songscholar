@@ -207,9 +207,11 @@ class SongRefController extends Controller
         
         $passage = $songRef->passageVersion->passage;
         
+        $data['chapters'][-1]='Ch';
         $maxChapter = \App\Book::numChapters($passage->book);
         for($i=1;$i<=$maxChapter;$i++){$data['chapters'][$i]=$i;}
         
+        $data['verses'][-1]='V';
         $maxVerse = \App\Book::numVerses($passage->book,$passage->chapter);
         for($i=1;$i<=$maxVerse;$i++){$data['verses'][$i]=$i;}
         

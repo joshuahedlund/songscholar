@@ -1,7 +1,7 @@
 {{ Form::open(array('route' => array('songRef.updatePassageReference',$songRef->id))) }}
 <div class="form-group">
   <div>
-  {{ Form::select('book', $books, $pv->passage->book) }}
+  {{ Form::select('book', $books, $pv->passage->book, array('id'=>'book')) }}
   <span id="chapterSpan">
     {{ Form::select('chapter', $chapters, $pv->passage->chapter, array('id'=>'chapter')) }} 
   </span>

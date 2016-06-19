@@ -4,8 +4,11 @@
 <title>@yield('title') - SongScholar</title>
 <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style>
-input.xs{width:50px}
-label{font-weight:normal;display:inline}
+.xs,.m{display:inline}
+input.xs,select.xs{width:50px}
+input.m{width:100%;max-width:300px}
+select.m{width:auto}
+label{font-weight:normal}
 </style>
 </head>
 <body>

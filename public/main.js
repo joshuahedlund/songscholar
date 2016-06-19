@@ -71,6 +71,7 @@ function loadChaptersByBook(bookName){
                 for(var i=1;i<=numChapters;i++){
                     ch.append($('<option/>').val(i).text(i));
                 }
+                $('#verse').val(-1); //deselect verse
             }
         });
     }
@@ -124,6 +125,8 @@ function ajaxIndexPassage(songRefId){
 function ajaxEditPassageReference(songRefId){
     $.get('/songRef/'+songRefId+'/editPassageReference',function(t){
         $('#editPassage-'+songRefId).html(t);
+        attachBookChange($('#book'));
+        attachChapterChange($('#chapter'));
     });
 }
 function ajaxUpdatePassageReference(songRefId,frm){
