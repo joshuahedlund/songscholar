@@ -1,1 +1,1 @@
-{{ Form::select('album',$albums) }}
+{{ Form::select('album',$albums, null, array('class' => 'form-control auto')) }}

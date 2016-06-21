@@ -56,11 +56,16 @@ class SongRefController extends Controller
      */
     public function store(Request $request)
     {
-        /*$this->validate($request, [
-             'song' => 'required',
-             'album' => 'required',
-             'artist' => 'required'
-        ]);*/
+        $this->validate($request, [
+            'artist' => 'required_without:artistname|not_in:0,-1',
+            'artistname' => 'required_if:artist,0,-1,null',
+             'song' => 'required_without:songname|not_in:0,-1',
+             'songname' => 'required_if:song,0,-1|required_without:song',
+             'book' => 'required',
+             'chapter' => 'required',
+             'verse' => 'required',
+             'pvid' => 'required'
+        ]);
 
         //Create the stuff
         if(!empty($request->artistname)){

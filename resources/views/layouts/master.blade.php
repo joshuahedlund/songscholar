@@ -7,7 +7,7 @@
 .xs,.m{display:inline}
 input.xs,select.xs{width:50px}
 input.m{width:100%;max-width:300px}
-select.m{width:auto}
+.auto{width:auto;display:inline}
 label{font-weight:normal}
 </style>
 </head>

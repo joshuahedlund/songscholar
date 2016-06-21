@@ -1,3 +1,5 @@
+<!-- OBSOLETE replaced by editPassageReference and editPassageVersion -->
+
 {{ Form::open(array('route' => array('songRef.updatePassageReference',$songRef->id))) }}
 <div class="form-group">
   <div>

@@ -7,20 +7,26 @@
 {{ Form::open(array('route' => 'songrefs.store')) }}
 <div class="form-group">
   {{ Form::label('artist','Artist') }}
-  {{ Form::select('artist', $artists, null, array('class' => 'form-control m')) }}
+  <div>
+  {{ Form::select('artist', $artists, null, array('class' => 'form-control auto')) }}
   {{ Form::text('artistname', null, array('class' => 'form-control m','style' => 'display:none;')) }}
+  </div>
 </div>
 <div class="form-group">
   {{ Form::label('album','Album (optional)') }}
+  <div>
   <span id="albumSpan">
   </span>
   {{ Form::text('albumname', null, array('class' => 'form-control m')) }}
+  </div>
 </div>
 <div class="form-group">
   {{ Form::label('song','Song') }}
+  <div>
   <span id="songSpan">
   </span>
   {{ Form::text('songname', null, array('class' => 'form-control m')) }}
+  </div>
 </div>
 <div class="form-group">
   {{ Form::label('lyric','Lyric') }}
@@ -28,17 +34,19 @@
 </div>
 <div class="form-group">
   {{ Form::label('book','Passage') }}
-  {{ Form::select('book', $books, null, array('class'=>'form-control m')) }}
+  {{ Form::select('book', $books, null, array('class'=>'form-control auto')) }}
   <span id="chapterSpan">
-    {{ Form::select('chapter', $chapters, null, array('id'=>'chapter', 'class'=>'form-control xs')) }} 
+    {{ Form::select('chapter', $chapters, null, array('id'=>'chapter', 'class'=>'form-control auto')) }} 
   </span>
   : 
   <span id="verseSpan">
-    {{ Form::select('verse', $verses, null, array('id'=>'verse', 'class'=>'form-control xs')) }}
+    {{ Form::select('verse', $verses, null, array('id'=>'verse', 'class'=>'form-control auto')) }}
   </span>
 </div>
 <div class="form-group" id="editPassageVersionFields">
-
+    <i>Select passage to choose a version</i>
+    <br/>
+    <br/>
 </div>
 
   {{ Form::token() }}
