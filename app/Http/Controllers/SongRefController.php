@@ -57,15 +57,15 @@ class SongRefController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'artist' => 'required_without:artistname|not_in:0,-1',
-            'artistname' => 'required_if:artist,0,-1,null',
-             'song' => 'required_without:songname|not_in:0,-1',
-             'songname' => 'required_if:song,0,-1|required_without:song',
+            'artist' => 'not_in:-1',
+            'artistname' => 'required_if:artist,0',
+             'song' => 'not_in:-1',
+             'songname' => 'required_if:song,0|required_without:song',
              'book' => 'required',
              'chapter' => 'required',
              'verse' => 'required',
              'pvid' => 'required'
-        ]);
+        ],$this->messages());
 
         //Create the stuff
         if(!empty($request->artistname)){
@@ -86,7 +86,7 @@ class SongRefController extends Controller
         if(!empty($request->songname)){
             $song = \App\Song::firstOrCreate(array('name'=>$request->songname,'album_id'=>$album->id));
         }else{
-            $song = \App\Song::where(array('name'=>$request->song,'album_id'=>$album->id))->first();
+            $song = \App\Song::where(array('id'=>$request->song,'album_id'=>$album->id))->first();
         }
         $song->album_id = $album->id;
         $song->save();
@@ -119,7 +119,7 @@ class SongRefController extends Controller
             
             \Session::flash('flash_message','Song reference successfully added! +10 points!');
         }
-        return redirect('/');
+        return redirect('/song/'.$song->id);
     }
 
     /**
