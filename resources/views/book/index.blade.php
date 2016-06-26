@@ -22,9 +22,9 @@
                         <td>
                             <div>
                                 <?php echo nl2br($songRef->lyric); ?>
-                                @if($songRef->song && $songRef->song->album && $songRef->song->album->artist) 
+                                @if($songRef->song && $songRef->song->artist) 
                                     <br/>(
-                                    {{ HTML::linkAction('SongController@index',$songRef->song->album->artist->name.' - '.$songRef->song->name,$songRef->song->id) }}
+                                    {{ HTML::linkAction('SongController@index',$songRef->song->artist->name.' - '.$songRef->song->name,$songRef->song->id) }}
                                     )
                                 @endif
                             

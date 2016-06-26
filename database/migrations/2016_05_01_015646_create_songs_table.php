@@ -16,7 +16,9 @@ class CreateSongsTable extends Migration
            $table->increments('id');
            $table->string('name');
            $table->integer('album_id')->unsigned();
+           $table->integer('artist_id')->unsigned();
            $table->timestamps();
+           $table->index('artist_id');
         });
     }
 

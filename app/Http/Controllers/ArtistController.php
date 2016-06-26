@@ -17,7 +17,7 @@ class ArtistController extends Controller
     {        
         $artist = \App\Artist::where('name',str_replace('-',' ',$name))->first();
         
-        $artist->load(['albums.songs.songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
+        $artist->load(['songs.songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
             $songRefs = $q->get()->unique();
         }]);
      

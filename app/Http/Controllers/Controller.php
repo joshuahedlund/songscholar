@@ -29,7 +29,8 @@ class Controller extends BaseController
             'song.not_in' => 'Song is required',
             'songname.required_if' => 'Song is required',
             'songname.required_without' => 'Song is required',
-            'pvid.required' => 'A passage version is required'
+            'pvid.required' => 'A passage version is required',
+            'text.required_if' => 'Text is required to add a new version of the verse'
         ];
     }
 }

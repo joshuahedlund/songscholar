@@ -25,7 +25,7 @@
                         </td>
                                 
                         <td>
-                            <div>{{ $songRef->song->album->name }}</div>
+                            <div>@if($songRef->song && $songRef->song->album) {{ $songRef->song->album->name }} @endif</div>
                         </td>
 
                         <td>

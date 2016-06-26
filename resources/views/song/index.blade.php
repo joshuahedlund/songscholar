@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', $song->name.' by '.$song->album->artist->name);
+@section('title', $song->name.' by '.$song->artist->name);
 
 @section('content')
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{ HTML::linkAction('ArtistController@index',$song->album->artist->name, str_replace(' ','-',$song->album->artist->name)) }} &gt; {{ $song->name }}
+                {{ HTML::linkAction('ArtistController@index',$song->artist->name, str_replace(' ','-',$song->artist->name)) }} &gt; {{ $song->name }}
             </div>
 
             <div class="panel-body">

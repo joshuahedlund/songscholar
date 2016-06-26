@@ -13,6 +13,7 @@ class Artist extends Model
     }
     
     public function songs(){
-        return $this->hasManyThrough('App\Song','App\Album');
+        //return $this->hasManyThrough('App\Song','App\Album'); //allow optional albums
+        return $this->hasMany('App\Song');
     }
 }

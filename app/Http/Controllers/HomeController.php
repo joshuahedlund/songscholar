@@ -32,8 +32,8 @@ class HomeController extends Controller
         //Get artists with count of references per artist
         $artists = DB::table('songRefs')
             ->join('songs','songRefs.song_id','=','songs.id')
-            ->join('albums','songs.album_id','=','albums.id')
-            ->join('artists','albums.artist_id','=','artists.id')
+            //->join('albums','songs.album_id','=','albums.id') //cut out middleman to make albums optional
+            ->join('artists','songs.artist_id','=','artists.id')
             ->select(DB::raw('count(*) as cnt, artists.name as artistname'))
             ->groupBy('artists.id')
             ->orderBy('artists.name')

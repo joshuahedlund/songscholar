@@ -64,7 +64,8 @@ class SongRefController extends Controller
              'book' => 'required',
              'chapter' => 'required',
              'verse' => 'required',
-             'pvid' => 'required'
+             'pvid' => 'required',
+             'text' => 'required_if:pvid,0'
         ],$this->messages());
 
         //Create the stuff
@@ -77,18 +78,24 @@ class SongRefController extends Controller
         
         if(!empty($request->albumname)){
             $album = \App\Album::firstOrCreate(array('name'=>$request->albumname,'artist_id'=>$artist->id));
-        }else{
+        }else if($request->album>0){
             $album = \App\Album::where(array('id'=>$request->album,'artist_id'=>$artist->id))->first();
         }
-        $album->artist_id = $artist->id;
-        $album->save();
+        if(isset($album)){
+            $album->artist_id = $artist->id;
+            $album->save();
+            $albumId=$album->id;
+        }else{ //no album given
+            $albumId=0;
+        }
 
         if(!empty($request->songname)){
-            $song = \App\Song::firstOrCreate(array('name'=>$request->songname,'album_id'=>$album->id));
+            $song = \App\Song::firstOrCreate(array('name'=>$request->songname,'artist_id'=>$artist->id));
         }else{
-            $song = \App\Song::where(array('id'=>$request->song,'album_id'=>$album->id))->first();
+            $song = \App\Song::where(array('id'=>$request->song,'aritst_id'=>$artist->id))->first();
         }
-        $song->album_id = $album->id;
+        $song->artist_id = $artist->id;
+        $song->album_id = $albumId;
         $song->save();
         
         $passage = \App\Passage::where(array('book'=>$request->book,'chapter'=>$request->chapter,'verse'=>$request->verse))->first();
