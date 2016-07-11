@@ -17,9 +17,13 @@ class SongController extends Controller
     {        
         $song = \App\Song::with('album.artist')->where('id',$id)->first();
         
-        $song->load(['songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
-            $songRefs = $q->get()->unique();
-        }]);
+        if($song){
+            $song->load(['songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
+                $songRefs = $q->get()->unique();
+            }]);
+        }else{
+            abort(404);
+        }
              
         return view('song.index', ['song' => $song, 'songRefs' => $songRefs]);
     }

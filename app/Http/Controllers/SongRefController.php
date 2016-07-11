@@ -25,10 +25,16 @@ class SongRefController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($songId=null)
     {
         if(!\Auth::check()){
            return redirect('login');
+        }
+        
+        if($songId){ //Get data to pre-fill existing song info
+            $song=\App\Song::where('id',$songId)->first();
+            $data['artist_id']=$song->artist_id;
+            $data['song']=$song->name;
         }
 
         //Get data for default create form
@@ -46,6 +52,11 @@ class SongRefController extends Controller
         $data['verses'][-1]='V';
             
         return view('songref.create',$data);
+    }
+    
+    /** Show form for creating a new reference - with existing song id pre-selected */
+    public function add($songId){
+        return $this->create($songId);
     }
 
     /**
@@ -92,7 +103,7 @@ class SongRefController extends Controller
         if(!empty($request->songname)){
             $song = \App\Song::firstOrCreate(array('name'=>$request->songname,'artist_id'=>$artist->id));
         }else{
-            $song = \App\Song::where(array('id'=>$request->song,'aritst_id'=>$artist->id))->first();
+            $song = \App\Song::where(array('id'=>$request->song,'artist_id'=>$artist->id))->first();
         }
         $song->artist_id = $artist->id;
         $song->album_id = $albumId;

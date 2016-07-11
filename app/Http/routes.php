@@ -29,6 +29,7 @@ Route::get('book/{name}/{ch}/{v}/editPassageVersionFields','BookController@editP
 Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
 
 Route::resource('songrefs','SongRefController');
+Route::get('songref/add/{id}','SongRefController@add');
 
 $ajaxGetRoutes = array('editLyric','indexPassage','editPassageReference','editPassageVersion');
 foreach($ajaxGetRoutes as $ajaxRoute){

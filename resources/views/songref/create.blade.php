@@ -4,11 +4,11 @@
 
 @section('content')
 <h2>Add a Song Reference</h2>
-{{ Form::open(array('route' => 'songrefs.store')) }}
+{{ Form::open(array('route' => 'songrefs.store', 'id' => 'frmAddRef')) }}
 <div class="form-group">
   {{ Form::label('artist','Artist') }}
   <div>
-  {{ Form::select('artist', $artists, null, array('class' => 'form-control auto')) }}
+  {{ Form::select('artist', $artists, @$artist_id, array('class' => 'form-control auto')) }}
   {{ Form::text('artistname', null, array('class' => 'form-control m','style' => 'display:none;')) }}
   </div>
 </div>
@@ -25,7 +25,7 @@
   <div>
   <span id="songSpan">
   </span>
-  {{ Form::text('songname', null, array('class' => 'form-control m')) }}
+  {{ Form::text('songname', @$song, array('class' => 'form-control m')) }}
   </div>
 </div>
 <div class="form-group">
@@ -49,7 +49,12 @@
     <br/>
 </div>
 
+<div class="alert alert-danger" id="jsErrors" style="display:none">
+</div>
+
+
   {{ Form::token() }}
   {{ Form::submit(null, array('class' => 'btn btn-default')) }}
+    
 {{ Form::close() }}
 @endsection

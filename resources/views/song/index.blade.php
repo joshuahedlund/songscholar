@@ -49,5 +49,10 @@
             </table>
             @endif
             </div>
+            <div class="panel-body">
+                <p>
+                    {{ HTML::linkAction('SongRefController@add','Add another reference for this song',$song->id) }}
+                </p>
+            </div>
         </div>
 @endsection

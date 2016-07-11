@@ -110,6 +110,31 @@ function ajaxEditPassageVersionFields(verse){
     }
 }
 
+function validateAddRef(E){
+    var frm=E.target,errs=[];
+    if(frm.artist.value=='-1'||(frm.artist.value=='0'&&(!frm.artistname||frm.artistname.value==''))){
+        errs.push('Artist is required');
+    }
+    if((frm.song&&frm.song.value=='-1')||((!frm.song||frm.song.value=='0')&&(!frm.songname||frm.songname.value==''))){
+        errs.push('Song is required');
+    }
+    if(!frm.pvid||!frm.pvid.value.length){
+        errs.push('Passage is required');
+    }
+    if(errs.length){
+        var errStr='<ul>';
+        for(var err in errs){
+            errStr+='<li>'+errs[err]+'</li>';
+        }
+        errStr+='</ul>';
+        $('#jsErrors').html(errStr).show();
+        return false;
+    }else{
+        $('#jsErrors').hide();
+        return true;
+    }
+}
+
 
 //Editing existing song references
 function ajaxEditLyric(songRefId){
@@ -153,4 +178,6 @@ $(function(){
     attachBookChange($('#book'));
     attachChapterChange($('#chapter'));
     attachVerseChange($('#verse'));
+    
+    $("#frmAddRef").on('submit',validateAddRef);
 });
