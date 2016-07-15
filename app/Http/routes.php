@@ -27,6 +27,8 @@ Route::get('book/{name}/{ch}/numVerses','BookController@numVerses');
 Route::get('book/{name}/{ch}/{v}/editPassageVersionFields','BookController@editPassageVersionFields');
 
 Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
+Route::get('song/{id}/order','SongController@editOrder');
+Route::post('song/{id}/updateOrder',['as'=>'song.updateOrder','uses'=>'SongController@updateOrder']);
 
 Route::resource('songrefs','SongRefController');
 Route::get('songref/add/{id}','SongRefController@add');

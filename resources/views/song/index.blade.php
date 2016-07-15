@@ -50,9 +50,16 @@
             @endif
             </div>
             <div class="panel-body">
+                @if(!Auth::guest())
                 <p>
                     {{ HTML::linkAction('SongRefController@add','Add another reference for this song',$song->id) }}
                 </p>
+                    @if(count($songRefs)>=2)
+                    <p>
+                        {{ HTML::linkAction('SongController@editOrder','Edit order of these references',$song->id) }}
+                    </p>
+                    @endif
+                @endif
             </div>
         </div>
 @endsection
