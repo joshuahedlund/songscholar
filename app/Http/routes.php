@@ -42,6 +42,8 @@ foreach($ajaxPostRoutes as $ajaxRoute){
     Route::post('songRef/{id}/'.$ajaxRoute,array('as'=>'songRef.'.$ajaxRoute,'uses'=>'SongRefController@'.$ajaxRoute));
 }
 
+Route::post('comment',['as'=>'comment.store','uses'=>'CommentController@store']);
+
 //Route::get('songRef/{id}/editLyric/','SongRefController@editLyric');
 //Route::post('songRef/{id}/updateLyric/',array('as'=>'songRef.updateLyric','uses'=>'SongRefController@updateLyric'));
 //Route::get('songRef/{id}/editPassageReference/','SongRefController@editPassageReference');

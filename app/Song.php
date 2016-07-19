@@ -19,4 +19,8 @@ class Song extends Model
     public function songRefs(){
         return $this->hasMany('App\SongRef');
     }
+    
+    public function comments(){
+        return $this->hasMany('App\Comment');
+    }
 }

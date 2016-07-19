@@ -16,6 +16,9 @@ class SongController extends Controller
     public function index($id)
     {        
         $data = $this->getSongAndRefs($id);
+        /*if($data['song']){
+            $data['comments'] = $this->getSongComments($data['song']);
+        }*/
              
         return view('song.index', $data);
     }
@@ -58,14 +61,20 @@ class SongController extends Controller
         $song = \App\Song::with('album.artist')->where('id',$id)->first();
         
         if($song){
-            $song->load(['songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
+            /*$song->load(['songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
                 $songRefs = $q->orderBy('order')->get()->unique();
-            }]);
+            }]);*/
         }else{
             abort(404);
         }
         
-        return ['song' => $song, 'songRefs' => $songRefs];
+        return ['song' => $song, 'songRefs' => $song->songRefs];
     }
+    
+    /*private function getSongComments($song){
+        $song->load(['coments' => function ($q) use ( &$comments ) {
+                $comments = $q->orderBy('id')->get()->unique();
+            }]);
+    }*/
     
 }
