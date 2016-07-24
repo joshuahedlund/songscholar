@@ -3,13 +3,13 @@
 @section('title', $artist->name)
 
 @section('content')
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="panel panel-primary">
+            <div class="panel-heading panel-title">
                 {{ $artist->name }}
             </div>
 
             <div class="panel-body">
-            @if(count($songRefs)>0)
+            @if(count($songs)>0)
             <table class="table table-striped task-table">
                 <thead>
                         <th>Song</th>
@@ -17,19 +17,26 @@
                         <th>Passage</th>
                 </thead>
                 <tbody>
-                @foreach ($songRefs as $songRef)
-                <?php $passage = $songRef->passageVersion->passage; ?>
+                @foreach ($songs as $song)
                     <tr>
                         <td class="table-text">
-                            <div> @if($songRef->song) {{ HTML::linkAction('SongController@index',$songRef->song->name,$songRef->song->id) }} @endif </div>
+                            <div> {{ HTML::linkAction('SongController@index',$song->name,$song->id) }} </div>
                         </td>
                                 
                         <td>
-                            <div>@if($songRef->song && $songRef->song->album) {{ $songRef->song->album->name }} @endif</div>
+                            <div>@if($song->album) {{ $song->album->name }} @endif</div>
                         </td>
 
                         <td>
-                            <div> @if($passage) {{$passage->book}} {{$passage->chapter}}:{{$passage->verse}} @endif </div>
+                            
+                            <div> @if($song->songRefs)
+                                    <?php $c=''; ?>
+                                    @foreach($song->songRefs as $songRef)
+                                    {{$c}} {{$songRef->passageVersion->passage->book}} {{$songRef->passageVersion->passage->chapter}}:{{$songRef->passageVersion->passage->verse}}
+                                    <?php $c=','; ?>
+                                    @endforeach
+                                    @endif 
+                            </div>
                         </td>                        
                     </tr>
                 @endforeach

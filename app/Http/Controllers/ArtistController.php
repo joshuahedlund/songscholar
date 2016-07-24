@@ -17,19 +17,11 @@ class ArtistController extends Controller
     {        
         $artist = \App\Artist::where('name',str_replace('-',' ',$name))->first();
         
-        $artist->load(['songs.songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
-            $songRefs = $q->get()->unique();
+        $artist->load(['songs' => function ($q) use ( &$songs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
+            $songs = $q->get()->unique();
         }]);
      
-        //$songRefs = \App\Songref::with('song')->with('album')->with(['artist'=>function($query) use ($artist){$query->where('artists.id',$artist->id);}])->get();
-        
-        //$songRefs = \App\SongRef::with(['song.album.artist'=>function($query) use ($artist){$query->where('artists.id',$artist->id);}])->get();
-        //$songRefs = \App\SongRef::with(['song','song.album','song.album.artist'=>function($query) use ($artist){$query->where('artists.id',$artist->id);}])->get();
-        
-        //$songRefs = \App\SongRef::with(['song','song.album','song.album.artist'])->where('artists.id',$artist->id)->get();
-        
-        
-        return view('artist.index', ['artist' => $artist, 'songRefs' => $songRefs]);
+        return view('artist.index', ['artist' => $artist, 'songs' => $songs]);
     }
     
     public function selectAlbums($artistId){

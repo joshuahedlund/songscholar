@@ -22,20 +22,22 @@ class BookController extends Controller
         });*/
         
         $book = str_replace('-',' ',$name);
-        $passages = \App\Passage::where('book',$book)->get();
+        
+        $songRefs = DB::table('songRefs')
+                    ->join('passageVersions','songRefs.passageVersion_id','=','passageVersions.id')
+                    ->join('passages','passageVersions.passage_id','=','passages.id')
+                    ->join('songs','songRefs.song_id','=','songs.id')
+                    ->join('artists','songs.artist_id','=','artists.id')
+                    ->select('lyric', 'version', 'text', 'chapter', 'verse', 'artists.name as artist_name', 'songs.name as song_name','song_id')
+                    ->where('book',$book)
+                    ->orderBy('chapter')->orderBy('verse')
+                    ->get();
+        
+        /*$passages = \App\Passage::where('book',$book)->get();
         
         $passages->load(['passageVersions.songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
             $songRefs = $q->get()->unique();
-        }]);
-        //$passageV = $passages->passageVersions;
-     
-        //$songRefs = \App\Songref::with('song')->with('album')->with(['artist'=>function($query) use ($artist){$query->where('artists.id',$artist->id);}])->get();
-        
-        //$songRefs = \App\SongRef::with(['song.album.artist'=>function($query) use ($artist){$query->where('artists.id',$artist->id);}])->get();
-        //$songRefs = \App\SongRef::with(['song','song.album','song.album.artist'=>function($query) use ($artist){$query->where('artists.id',$artist->id);}])->get();
-        
-        //$songRefs = \App\SongRef::with(['song','song.album','song.album.artist'])->where('artists.id',$artist->id)->get();
-        
+        }]);*/        
         
         return view('book.index', ['book' => $book, 'songRefs' => $songRefs]);
     }

@@ -3,8 +3,8 @@
 @section('title', $book)
 
 @section('content')
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="panel panel-primary">
+            <div class="panel-heading panel-title">
                 {{ $book }}
             </div>
 
@@ -12,32 +12,27 @@
             @if(count($songRefs)>0)
             <table class="table table-striped task-table">
                 <thead>
-                        <th class="col-xs-6">Lyric</th>
                         <th class="col-xs-6">Passage</th>
+                        <th class="col-xs-6">Lyric</th>
                 </thead>
                 <tbody>
                 @foreach ($songRefs as $songRef)
-                <?php $passage = $songRef->passageVersion->passage; ?>
                     <tr>
+                    <td>
+                            <div>
+                                {{ $songRef->chapter }}:{{$songRef->verse}}
+                                <?php echo nl2br($songRef->text); ?>
+                            </div>
+                        </td>
                         <td>
                             <div>
                                 <?php echo nl2br($songRef->lyric); ?>
-                                @if($songRef->song && $songRef->song->artist) 
+                                @if($songRef->song_id && $songRef->artist_name) 
                                     <br/>(
-                                    {{ HTML::linkAction('SongController@index',$songRef->song->artist->name.' - '.$songRef->song->name,$songRef->song->id) }}
+                                    {{ HTML::linkAction('SongController@index',$songRef->artist_name.' - '.$songRef->song_name,$songRef->song_id) }}
                                     )
                                 @endif
                             
-                            </div>
-                        </td>
-
-                        <td>
-                            <div> 
-                                @if($passage) {{$passage->chapter}}:{{$passage->verse}} @endif
-                        
-                                @if($songRef->passageVersion)
-                                <?php echo nl2br($songRef->passageVersion->text); ?>
-                                @endif
                             </div>
                         </td>
                     </tr>
