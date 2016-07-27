@@ -17,6 +17,7 @@
   @endforeach
   @endif
     <label>{{ Form::radio('pvid',0) }} Add a version: {{ Form::text('version', null, array('class'=>'xs')) }}</label>
+    &nbsp; <a href="javascript:void(0);" id="BGversionLookup" data-ref="{{ $passage->passageConcat() }}">Look up this version on Bible Gateway</a>
     <br/>
     <div class="form-group">
     Text:

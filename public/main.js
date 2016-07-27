@@ -106,8 +106,16 @@ function ajaxEditPassageVersionFields(verse){
         var frm = verse.form,bookName=frm.book.value,ch=frm.chapter.value,v=frm.verse.value;
         $.get('/book/'+encodeURIComponent(bookName)+'/'+ch+'/'+v+'/editPassageVersionFields',function(t){
             $('#editPassageVersionFields').html(t);
+            attachVerseLookup();
         });
     }
+}
+function attachVerseLookup(){
+    $('#BGversionLookup').on('click',function(){
+        var search=encodeURIComponent($(this).data('ref')),
+        version = $(this).closest('form')[0].version.value;
+        window.open('https://www.biblegateway.com/passage/?search='+search+'&version='+version,'_blank');
+    });
 }
 
 function validateAddRef(E){
@@ -162,6 +170,7 @@ function ajaxUpdatePassageReference(songRefId,frm){
 function ajaxEditPassageVersion(songRefId){
     $.get('/songRef/'+songRefId+'/editPassageVersion',function(t){
         $('#editPassage-'+songRefId).html(t);
+        attachVerseLookup();
     });
 }
 function editPV(pvId){
