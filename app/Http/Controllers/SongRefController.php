@@ -34,6 +34,9 @@ class SongRefController extends Controller
         if($songId){ //Get data to pre-fill existing song info
             $song=\App\Song::where('id',$songId)->first();
             $data['artist_id']=$song->artist_id;
+            if($song->album){
+                $data['album']=$song->album->name;
+            }
             $data['song']=$song->name;
         }
 

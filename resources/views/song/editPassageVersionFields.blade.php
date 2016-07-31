@@ -16,8 +16,9 @@
     <br/>
   @endforeach
   @endif
-    <label>{{ Form::radio('pvid',0) }} Add a version: {{ Form::text('version', null, array('class'=>'xs')) }}</label>
-    &nbsp; <a href="javascript:void(0);" id="BGversionLookup" data-ref="{{ $passage->passageConcat() }}">Look up this version on Bible Gateway</a>
+    <label>{{ Form::radio('pvid',0) }} Add a version: {{ Form::text('version', null, array('class'=>'xs','id'=>'version')) }}</label>
+    <?php $book = str_replace(['psalm','song of solomon',' '],['psalms','songs','_'],strtolower($passage->book)); ?>
+    &nbsp; <a href="http://www.biblehub.com/{{$book}}/{{$passage->chapter}}-{{$passage->verse}}.htm" target="_blank">Look up this verse on biblehub</a>
     <br/>
     <div class="form-group">
     Text:

@@ -17,7 +17,7 @@
   <div>
   <span id="albumSpan">
   </span>
-  {{ Form::text('albumname', null, array('class' => 'form-control m')) }}
+  {{ Form::text('albumname', @$album, array('class' => 'form-control m')) }}
   </div>
 </div>
 <div class="form-group">
