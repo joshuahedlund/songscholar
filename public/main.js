@@ -140,6 +140,12 @@ function validateAddRef(E){
 
 
 //Editing existing song references
+function ajaxEditSong(E){
+    var songId = $(E.target).data('song-id');
+    $.get('/song/'+songId+'/edit',function(t){
+        $('#editSong-'+songId).html(t);
+    });
+}
 function ajaxEditLyric(songRefId){
     $.get('/songRef/'+songRefId+'/editLyric',function(t){
         $('#editLyric-'+songRefId).html(t);
@@ -186,4 +192,5 @@ $(function(){
     attachVerseChange($('#verse'));
     
     $("#frmAddRef").on('submit',validateAddRef);
+    $('#ajaxEditSong').on('click',ajaxEditSong);
 });

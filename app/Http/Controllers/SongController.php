@@ -23,6 +23,49 @@ class SongController extends Controller
         return view('song.index', $data);
     }
     
+    /** edit song details like name and album */
+    public function editSong($id){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $song = \App\Song::with('album.artist')->where('id',$id)->first();
+        
+        if($song){
+            $data['song'] = $song;
+            $data['album'] = ($song->album) ? $song->album->name : null;
+            return view('song.editSong', $data);
+        }else{
+            abort(404);
+        }
+    }
+    public function updateSong($songId, Request $request){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $song = \App\Song::with('album.artist')->where('id',$songId)->first();
+        $user = $request->user();
+        
+        if($song){
+            $song->name = $request->songname;
+            if(!empty($request->albumname)){
+                $album = \App\Album::firstOrCreate(array('name'=>$request->albumname,'artist_id'=>$song->artist->id));
+                if($album){
+                    $album->artist_id = $song->artist->id;
+                    $album->save();
+                    $albumId=$album->id;
+                    $song->album_id = $albumId;
+                }
+            }
+            $song->save();
+        }else{
+            abort(404);
+        }
+
+        return redirect('/song/'.$songId);
+    }
+    
     /* edit the order of a song's references */
     public function editOrder($id){
         if(!\Auth::check()){

@@ -18,7 +18,7 @@ class ArtistController extends Controller
         $artist = \App\Artist::where('name',str_replace('-',' ',$name))->first();
         
         $artist->load(['songs' => function ($q) use ( &$songs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
-            $songs = $q->get()->unique();
+            $songs = $q->orderBy('name')->get()->unique();
         }]);
      
         return view('artist.index', ['artist' => $artist, 'songs' => $songs]);
@@ -26,7 +26,7 @@ class ArtistController extends Controller
     
     public function selectAlbums($artistId){
         $data['albums'][-1]='Select Album';
-        $albums = \App\Album::where('artist_id',$artistId)->get();
+        $albums = \App\Album::where('artist_id',$artistId)->orderBy('name')->get();
         foreach($albums as $album){
             $data['albums'][$album->id]=$album->name;
         }
@@ -37,7 +37,7 @@ class ArtistController extends Controller
     
     public function selectSongsByAlbum($albumId){
         $data['songs'][-1]='Select Song';
-        $songs = \App\Song::where('album_id',$albumId)->get();
+        $songs = \App\Song::where('album_id',$albumId)->orderBy('name')->get();
         foreach($songs as $song){
             $data['songs'][$song->id]=$song->name;
         }

@@ -3,8 +3,8 @@
 @section('title', $song->name.' by '.$song->artist->name);
 
 @section('content')
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="panel panel-primary">
+            <div class="panel-heading panel-title">
                 {{ HTML::linkAction('ArtistController@index',$song->artist->name, str_replace(' ','-',$song->artist->name)) }} &gt; {{ $song->name }}
             </div>
 

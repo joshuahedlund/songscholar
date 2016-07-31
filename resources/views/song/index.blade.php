@@ -44,6 +44,10 @@
             </div>
 
             <div class="panel-body">
+            @if (!Auth::guest())
+            <p id="editSong-{{$song->id}}"><a href="javascript:void(0);" id="ajaxEditSong" data-song-id="{{$song->id}}">Edit song details</a></p>
+            @endif
+            
             @if(count($song->songRefs)>0)
             <table class="table table-striped task-table">
                 <thead>
