@@ -48,7 +48,17 @@ class HomeController extends Controller
             ->groupBy('books.id')
             ->orderBy('books.id')
             ->get();
+            
+        $newRefs = DB::table('songRefs')
+            ->join('songs','songRefs.song_id','=','songs.id')
+            ->join('artists','songs.artist_id','=','artists.id')
+            ->join('passageVersions','songRefs.passageVersion_id','=','passageVersions.id')
+            ->join('passages','passageVersions.passage_id','=','passages.id')
+            ->select('songRefs.created_at as dateadded', 'songs.id as songid', 'artists.name as artistname', 'book', 'chapter', 'verse')
+            ->orderBy('songRefs.id','desc')
+            ->take(10)
+            ->get();
         
-        return view('home', array('artists' => $artists, 'books' => $books));
+        return view('home', array('artists' => $artists, 'books' => $books, 'newRefs' => $newRefs));
     }
 }

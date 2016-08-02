@@ -30,11 +30,13 @@
                         <td>
                             
                             <div> @if($song->songRefs)
-                                    <?php $c=''; ?>
-                                    @foreach($song->songRefs as $songRef)
-                                    {{$c}} {{$songRef->passageVersion->passage->book}} {{$songRef->passageVersion->passage->chapter}}:{{$songRef->passageVersion->passage->verse}}
-                                    <?php $c=','; ?>
-                                    @endforeach
+                                    <?php
+                                    $c='';
+                                    foreach($song->songRefs as $songRef){ //couldn't get comma spacing right with blade templating
+                                        echo $c.$songRef->passageVersion->passage->passageConcat();
+                                        $c=', ';
+                                    }
+                                    ?>
                                     @endif 
                             </div>
                         </td>                        
