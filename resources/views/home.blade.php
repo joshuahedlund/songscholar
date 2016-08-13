@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-heading panel-title">Welcome!</div>
 
@@ -13,11 +13,14 @@
                     <p>SongScholar is a database of song lyrics that reference Bible verses.</p>
                 </div>
             </div>
+        </div>
+    </div>
             
-            <div class="row">
+    <div class="row">
             
-            @if (count($artists)>0)
-            <div class="panel panel-default col-xs-4">
+        @if (count($artists)>0)
+        <div class="col-md-4">
+            <div class="panel panel-default">
                 <div class="panel-heading">View References by Artist</div>
 
                 <div class="panel-body">
@@ -29,10 +32,12 @@
                 @endforeach
                 </div>
             </div>
-            @endif
+        </div>
+        @endif
             
-            @if (count($books)>0)
-            <div class="panel panel-default col-xs-3">
+        @if (count($books)>0)
+        <div class="col-md-3">
+            <div class="panel panel-default">
                 <div class="panel-heading">View References by Book</div>
 
                 <div class="panel-body">
@@ -44,10 +49,12 @@
                 @endforeach
                 </div>
             </div>
-            @endif
+        </div>
+        @endif
             
-            @if (count($newRefs)>0)
-            <div class="panel panel-default col-xs-5">
+        @if (count($newRefs)>0)
+        <div class="col-md-5">
+            <div class="panel panel-default">
                 <div class="panel-heading">New References</div>
                 <div class="panel-body">
                 @foreach ($newRefs as $newRef)
@@ -59,10 +66,8 @@
                 @endforeach
                 </div>
             </div>
-            @endif
-            
-            </div>
         </div>
+        @endif
     </div>
 </div>
 @endsection
