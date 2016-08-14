@@ -39,6 +39,9 @@
                 @endforeach
                 </tbody>
             </table>
+            
+            {{ $songRefs->links() }}
+            
             @endif
             </div>
         </div>

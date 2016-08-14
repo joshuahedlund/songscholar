@@ -31,7 +31,8 @@ class BookController extends Controller
                     ->select('lyric', 'version', 'text', 'chapter', 'verse', 'artists.name as artist_name', 'songs.name as song_name','song_id')
                     ->where('book',$book)
                     ->orderBy('chapter')->orderBy('verse')
-                    ->get();
+                    //->get();
+                    ->paginate(20);
         
         /*$passages = \App\Passage::where('book',$book)->get();
         
