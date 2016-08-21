@@ -26,6 +26,9 @@ Route::get('book/{name}/numChapters','BookController@numChapters');
 Route::get('book/{name}/{ch}/numVerses','BookController@numVerses');
 Route::get('book/{name}/{ch}/{v}/editPassageVersionFields','BookController@editPassageVersionFields');
 
+Route::get('modal/feedback',function(){ return View::make('modal/feedback');});
+Route::post('modal/feedback','ModalController@storeFeedback');
+
 Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
 Route::get('song/{id}/order','SongController@editOrder');
 Route::get('song/{id}/edit','SongController@editSong');

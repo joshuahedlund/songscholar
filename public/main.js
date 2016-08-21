@@ -183,6 +183,24 @@ function editPV(pvId){
     $(spanEdit).html(html);
 }
 
+//Modals
+function modalFeedbackLoad(){
+    $.get('/modal/feedback/',function(t){
+        modal = $('#myModal');
+        $(modal).find('.modal-title').text('Give Me Some Feedback!');
+        $(modal).find('.modal-body').html(t);
+        $(modal).modal();
+        $('#frmModalFeedback').on('submit',modalFeedbackSubmit);
+    });
+}
+function modalFeedbackSubmit(E){
+    E.preventDefault();
+    $.post('/modal/feedback',$(E.target).serialize(),function(t){
+        modal = $('#myModal');
+        $(modal).find('.modal-body').html(t);
+    });
+}
+
 //when dom is ready
 $(function(){
     //attach events
@@ -193,4 +211,5 @@ $(function(){
     
     $("#frmAddRef").on('submit',validateAddRef);
     $('#ajaxEditSong').on('click',ajaxEditSong);
+    $('#modalFeedback').on('click',modalFeedbackLoad);
 });

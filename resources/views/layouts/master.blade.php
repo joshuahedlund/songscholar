@@ -15,7 +15,6 @@ label{font-weight:normal}
 <div class="container">
 
 <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -37,6 +36,7 @@ label{font-weight:normal}
                 <ul class="nav navbar-nav">
                     @if (!Auth::guest())
                     <li>{{HTML::linkAction('SongRefController@create','Add Reference')}}</li>
+                    <li><a href="javascript:void(0);" id="modalFeedback">Feedback</a></li>
                     @endif
                 </ul>
 
@@ -63,9 +63,9 @@ label{font-weight:normal}
                     @endif
                 </ul>
             </div>
-        </div>
     </nav>
 
+@include('common.modal')
 @include('common.errors')
 
 
