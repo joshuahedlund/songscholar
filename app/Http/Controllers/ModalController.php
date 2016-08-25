@@ -16,12 +16,11 @@ class ModalController extends Controller
         $user = $request->user();
         
         if(!empty($request->text)){
-            /*$feedback = \App\Feedback::create(['type'=>$request->type,'text'=>$request->text]);
+            $feedback = \App\Feedback::create(['type'=>$request->type,'text'=>$request->text]);
             $feedback->user_id = $user->id;
-            $feedback->page = $_SERVER['REQUEST_URI'];
             $feedback->refPage = $_SERVER['HTTP_REFERER'];
             
-            $feedback->save();*/
+            $feedback->save();
         }
         
         $s = '<p>Thank you for your feedback!</p>';
