@@ -205,6 +205,12 @@ function modalFeedbackSubmit(E){
 function attachDeleteComment(){
     $('.delete-comment').on('click',ajaxDeleteComment);
 }
+function ajaxAddComment(frm){
+    $.post('/comment/',$(frm).serialize(),function(t){
+        $('#divComments').html(t);
+        attachDeleteComment();
+    });
+}
 function ajaxDeleteComment(E){
     if(confirm('Are you sure you want to delete this comment?')){
         var el=E.target,frm=$('#frmComDel')[0];

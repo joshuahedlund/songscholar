@@ -28,7 +28,9 @@ class CommentController extends Controller
             $comment->save();  
         }
         
-        return redirect('/song/'.$request->song_id);
+        $comments = \App\Comment::where(['song_id'=>$request->song_id])->orderBy('id')->get();
+        
+        return view('comment.index',['comments'=>$comments,'user'=>$user,'songId'=>$request->song_id]);
     }
     
     public function delete(Request $request){
@@ -44,7 +46,7 @@ class CommentController extends Controller
             }
         }
         
-        $comments = \App\Comment::where(['song_id'=>$songId])->get();
+        $comments = \App\Comment::where(['song_id'=>$songId])->orderBy('id')->get();
         
         return view('comment.index',['comments'=>$comments,'user'=>$user,'songId'=>$songId]);
     }

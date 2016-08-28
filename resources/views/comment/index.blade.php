@@ -1,4 +1,4 @@
-<?php if(!isset($comments) && isset($song)){$comments=$song->comments;}?>
+<?php if(!isset($comments) && isset($song)){$comments=$song->comments()->orderBy('id')->get();}?>
 
 <div class="panel-heading">Comments ({{ count($comments) }})</div>
 <div class="panel-body">
@@ -38,7 +38,7 @@
       {{ Form::textarea('text', null, array('class' => 'form-control', 'rows' => 3)) }}
     </div>
     
-    {{ Form::submit('Add Comment', array('class' => 'btn btn-default')) }}
+    {{ Form::button('Add Comment', array('class' => 'btn btn-default','onclick'=>'ajaxAddComment(this.form);')) }}
     {{ Form::close() }}
 @endif
 </div>
