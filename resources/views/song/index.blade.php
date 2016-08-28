@@ -68,6 +68,13 @@
         </div>
         
         <div class="panel panel-default" id="divComments">
+            <div class="panel-body">
+                {{ HTML::link('https://www.youtube.com/results?search_query='.urlencode($song->artist->name.' '.$song->name),'Search for this song on YouTube',['target'=>'_blank']) }}
+            
+            </div>
+        </div>
+        
+        <div class="panel panel-default" id="divComments">
         @include('comment.index')
         </div>
         
