@@ -2,41 +2,6 @@
 
 @section('title', $song->name.' by '.$song->artist->name);
 
-@section('comments')
-<div class="panel panel-default">
-            <div class="panel-heading">Comments ({{ count($song->comments) }})</div>
-            <div class="panel-body">
-                @if(count($song->comments))
-                <table>
-                    @foreach ($song->comments as $comment)
-                    <tr>
-                        <td class="col-xs-3" valign="top">
-                            <p><b>{{ $comment->user->name }}</b><br/>
-                            {{ date_format($comment->created_at,'F j, Y') }}
-                            </p>
-                        </td>
-                        <td valign="top">
-                            <p>{{ $comment->text }}</p>
-                        </td>
-                    </tr>
-                    @endforeach
-                @endif
-                </table>
-                
-                @if(!Auth::guest())
-                    {{ Form::open(['route' => 'comment.store']) }}
-                    {{ Form::hidden('song_id',$song->id) }}
-                    <div class="form-group">
-                      {{ Form::textarea('text', null, array('class' => 'form-control', 'rows' => 3)) }}
-                    </div>
-                    
-                    {{ Form::submit('Add Comment', array('class' => 'btn btn-default')) }}
-                    {{ Form::close() }}
-                @endif
-            </div>
-        </div>
-@endsection
-
 @section('content')
         <div class="panel panel-primary">
             <div class="panel-heading panel-title">
@@ -102,6 +67,8 @@
             </div>
         </div>
         
-        @yield('comments')
+        <div class="panel panel-default" id="divComments">
+        @include('comment.index')
+        </div>
         
 @endsection

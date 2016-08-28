@@ -16,9 +16,8 @@ class SongController extends Controller
     public function index($id)
     {        
         $data = $this->getSongAndRefs($id);
-        /*if($data['song']){
-            $data['comments'] = $this->getSongComments($data['song']);
-        }*/
+        $data['user'] = \Request::user();
+        $data['songId'] = $data['song']->id;
              
         return view('song.index', $data);
     }

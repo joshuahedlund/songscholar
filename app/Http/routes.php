@@ -32,6 +32,7 @@ Route::post('modal/feedback','ModalController@storeFeedback');
 Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
 Route::get('song/{id}/order','SongController@editOrder');
 Route::get('song/{id}/edit','SongController@editSong');
+Route::get('song/{id}/comments','CommentController@index');
 Route::post('song/{id}/updateOrder',['as'=>'song.updateOrder','uses'=>'SongController@updateOrder']);
 Route::post('song/{id}/updateSong',['as'=>'song.updateSong','uses'=>'SongController@updateSong']);
 
@@ -48,6 +49,7 @@ foreach($ajaxPostRoutes as $ajaxRoute){
 }
 
 Route::post('comment',['as'=>'comment.store','uses'=>'CommentController@store']);
+Route::post('comment/delete/',['as'=>'comment.delete','uses'=>'CommentController@delete']);
 
 //Route::get('songRef/{id}/editLyric/','SongRefController@editLyric');
 //Route::post('songRef/{id}/updateLyric/',array('as'=>'songRef.updateLyric','uses'=>'SongRefController@updateLyric'));

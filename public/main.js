@@ -201,6 +201,21 @@ function modalFeedbackSubmit(E){
     });
 }
 
+//Comments
+function attachDeleteComment(){
+    $('.delete-comment').on('click',ajaxDeleteComment);
+}
+function ajaxDeleteComment(E){
+    if(confirm('Are you sure you want to delete this comment?')){
+        var el=E.target,frm=$('#frmComDel')[0];
+        frm.delete_id.value=$(el).data('id');
+        $.post('/comment/delete/',$(frm).serialize(),function(t){
+           $('#divComments').html(t); 
+           attachDeleteComment();
+        });
+    }
+}
+
 //when dom is ready
 $(function(){
     //attach events
@@ -208,6 +223,7 @@ $(function(){
     attachBookChange($('#book'));
     attachChapterChange($('#chapter'));
     attachVerseChange($('#verse'));
+    attachDeleteComment();
     
     $("#frmAddRef").on('submit',validateAddRef);
     $('#ajaxEditSong').on('click',ajaxEditSong);
