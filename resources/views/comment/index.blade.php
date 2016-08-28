@@ -15,7 +15,7 @@
             <p>{{ $comment->text }}</p>
         </td>
         <td valign="top">
-        @if(!Auth::guest() && ($comment->user_id = $user->id || $user->isAdmin))
+        @if(!Auth::guest() && ($comment->user_id == $user->id || $user->isAdmin))
             <p><a href="javascript:void(0);" class="delete-comment" data-id="{{ $comment->id }}">[X]</a></p>
         @endif
         </td>

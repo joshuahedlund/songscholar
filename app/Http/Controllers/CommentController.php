@@ -46,8 +46,12 @@ class CommentController extends Controller
             }
         }
         
-        $comments = \App\Comment::where(['song_id'=>$songId])->orderBy('id')->get();
-        
-        return view('comment.index',['comments'=>$comments,'user'=>$user,'songId'=>$songId]);
+        if($songId){        
+            $comments = \App\Comment::where(['song_id'=>$songId])->orderBy('id')->get();
+            
+            return view('comment.index',['comments'=>$comments,'user'=>$user,'songId'=>$songId]);
+        }else{
+            abort(404);
+        }
     }
 }
