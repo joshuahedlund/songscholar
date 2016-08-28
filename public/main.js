@@ -185,7 +185,7 @@ function editPV(pvId){
 
 //Modals
 function modalFeedbackLoad(){
-    $.get('/modal/feedback/',function(t){
+    $.get('/modal/feedback',function(t){
         modal = $('#myModal');
         $(modal).find('.modal-title').text('Give Me Some Feedback!');
         $(modal).find('.modal-body').html(t);
@@ -206,7 +206,7 @@ function attachDeleteComment(){
     $('.delete-comment').on('click',ajaxDeleteComment);
 }
 function ajaxAddComment(frm){
-    $.post('/comment/',$(frm).serialize(),function(t){
+    $.post('/comment',$(frm).serialize(),function(t){
         $('#divComments').html(t);
         attachDeleteComment();
     });
@@ -215,7 +215,7 @@ function ajaxDeleteComment(E){
     if(confirm('Are you sure you want to delete this comment?')){
         var el=E.target,frm=$('#frmComDel')[0];
         frm.delete_id.value=$(el).data('id');
-        $.post('/comment/delete/',$(frm).serialize(),function(t){
+        $.post('/comment/delete',$(frm).serialize(),function(t){
            $('#divComments').html(t); 
            attachDeleteComment();
         });
