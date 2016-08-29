@@ -21,7 +21,7 @@ foreach($ajaxGetRoutes as $ajaxRoute){
     Route::get('artist/{id}/'.$ajaxRoute,'ArtistController@'.$ajaxRoute);
 }
 
-Route::get('book/{name}','BookController@index');
+Route::get('book/{name}/{ch?}','BookController@index');
 Route::get('book/{name}/numChapters','BookController@numChapters');
 Route::get('book/{name}/{ch}/numVerses','BookController@numVerses');
 Route::get('book/{name}/{ch}/{v}/editPassageVersionFields','BookController@editPassageVersionFields');

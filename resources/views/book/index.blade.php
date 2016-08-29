@@ -9,6 +9,20 @@
             </div>
 
             <div class="panel-body">
+            @if(count($chapters)>=4)
+                    <p>
+                        <b>Filter by Chapter:</b>
+                            @foreach($chapters as $ch)
+                                &nbsp; 
+                                @if(!is_null($filterCh) && $filterCh==$ch->chapter)
+                                    <b>{{$ch->chapter}}</b>
+                                @else
+                                    {{ HTML::linkAction('BookController@index',$ch->chapter,[str_replace(' ','-',$book),$ch->chapter]) }}
+                                @endif
+                            @endforeach
+                    </p>
+                @endif
+            
             @if(count($songRefs)>0)
             <table class="table table-striped task-table">
                 <thead>
