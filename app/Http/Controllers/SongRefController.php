@@ -142,52 +142,34 @@ class SongRefController extends Controller
         }
         return redirect('/song/'.$song->id);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
     
+    public function delete(Request $request){
+        $songId=0;
+        $user = $request->user();
+        if(\Auth::check() && $user->isAdmin){
+            $songRef = \App\SongRef::where(['id'=>$request->ref_id])->first();
+            if($songRef){
+                //Subtract points for entering bad reference
+                $songRefUser = \App\User::where(['id'=>$songRef->createdBy])->first();
+                $songId=$songRef->song_id;
+                if($songRefUser){
+                    $songRefUser->points -= 11;
+                    $songRefUser->save();
+                }
+                
+                //Delete reference
+                $songRef->delete();
+                
+                \Session::flash('flash_message','Song reference successfully deleted!');
+            }
+        }
+        if($songId){
+            return redirect('/song/'.$songId);
+        }else{
+            abort(404);
+        }
+    }
+
     public function editLyric($songRefId){
         if(!\Auth::check()){
            return redirect('login');

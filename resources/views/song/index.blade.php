@@ -27,7 +27,12 @@
                             <div id="editLyric-{{$songRef->id}}"> 
                                 <?php echo nl2br($songRef->lyric); ?>
                             @if (!Auth::guest())
-                            <p>[<a href="javascript:void(0);" onclick="ajaxEditLyric({{$songRef->id}});">correct this lyric</a>]</p>
+                            <p>
+                                [<a href="javascript:void(0);" onclick="ajaxEditLyric({{$songRef->id}});">correct this lyric</a>]
+                                @if(Auth::user()->isAdmin)
+                                    &nbsp; [<a href="javascript:void(0);" onclick="ajaxDeleteRef({{$songRef->id}});">delete this reference</a>]
+                                @endif
+                            </p>
                             @endif
                             </div>
                             
@@ -51,6 +56,13 @@
                 @endforeach
                 </tbody>
             </table>
+            
+                {{--Print the delete form--}}
+                @if(Auth::user()->isAdmin)
+                    {{ Form::open(['route' => 'songRef.delete','id' => 'frmRefDel']) }}
+                    {{ Form::hidden('ref_id',0) }}
+                    {{ Form::close() }}
+                @endif   
             @endif
             </div>
             <div class="panel-body">
@@ -67,9 +79,12 @@
             </div>
         </div>
         
-        <div class="panel panel-default" id="divComments">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                External Links
+            </div>
             <div class="panel-body">
-                {{ HTML::link('https://www.youtube.com/results?search_query='.urlencode($song->artist->name.' '.$song->name),'Search for this song on YouTube',['target'=>'_blank']) }}
+                {{ HTML::link('https://www.youtube.com/results?search_query='.urlencode($song->artist->name.' '.$song->name),'Search for "'.$song->artist->name.' '.$song->name.'" on YouTube',['target'=>'_blank']) }}
             
             </div>
         </div>

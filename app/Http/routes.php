@@ -38,6 +38,7 @@ Route::post('song/{id}/updateSong',['as'=>'song.updateSong','uses'=>'SongControl
 
 Route::resource('songrefs','SongRefController');
 Route::get('songref/add/{id}','SongRefController@add');
+Route::post('songref/delete',['as'=>'songRef.delete','uses'=>'SongRefController@delete']);
 
 $ajaxGetRoutes = array('editLyric','indexPassage','editPassageReference','editPassageVersion');
 foreach($ajaxGetRoutes as $ajaxRoute){

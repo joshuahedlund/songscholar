@@ -182,6 +182,13 @@ function editPV(pvId){
     html += ' : ' + '<input type="text" name="pvtext'+pvId+'" value="'+$(spanText).html()+'">';
     $(spanEdit).html(html);
 }
+function ajaxDeleteRef(songRefId){
+    if(confirm('Are you sure you want to delete this reference?')){
+        var frm=$('#frmRefDel')[0];
+        frm.ref_id.value=songRefId;
+        frm.submit(); //will submit and reload song page
+    }
+}
 
 //Modals
 function modalFeedbackLoad(){
