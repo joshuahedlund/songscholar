@@ -49,7 +49,7 @@
             </table>
             
                 {{--Print the delete form--}}
-                @if(Auth::user()->isAdmin)
+                @if(!Auth::guest() && Auth::user()->isAdmin)
                     {{ Form::open(['route' => 'songRef.delete','id' => 'frmRefDel']) }}
                     {{ Form::hidden('ref_id',0) }}
                     {{ Form::close() }}
