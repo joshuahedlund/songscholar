@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>@yield('title') - SongScholar</title>
+<title>@hasSection('title') @yield('title') - SongRefs @else SongRefs @endif</title>
 <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style>
 .xs,.m{display:inline}
@@ -9,6 +9,8 @@ input.xs,select.xs{width:50px}
 input.m{width:100%;max-width:300px}
 .auto{width:auto;display:inline}
 label{font-weight:normal}
+.borderTop{border-top:1px solid #777;padding:5px 0}
+.padBottom{padding-bottom:10px}
 </style>
 </head>
 <body>
@@ -27,7 +29,7 @@ label{font-weight:normal}
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    SongScholar
+                    SongRefs
                 </a>
             </div>
 

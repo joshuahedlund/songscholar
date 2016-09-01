@@ -14,16 +14,14 @@
             @endif
             
             @if(count($song->songRefs)>0)
-            <table class="table table-striped task-table">
-                <thead>
-                        <th class="col-xs-6">Lyric</th>
-                        <th class="col-xs-6">Passage</th>
-                </thead>
-                <tbody>
+            <div class="row">
+                        <div class="col-sm-6"><b>Lyric</b></div>
+                        <div class="col-sm-6"><b><i>Passage</i></b></div>
+            </div>
                 @foreach ($song->songRefs as $songRef)
                 <?php $passage = $songRef->passageVersion->passage; ?>
-                    <tr>
-                        <td>
+                <div class="row borderTop">
+                        <div class="col-sm-6 padBottom">
                             <div id="editLyric-{{$songRef->id}}"> 
                                 <?php echo nl2br($songRef->lyric); ?>
                             @if (!Auth::guest())
@@ -36,17 +34,15 @@
                             @endif
                             </div>
                             
-                        </td>
+                        </div>
                                 
-                        <td>
+                        <div class="col-sm-6">
                             <div id="editPassage-{{$songRef->id}}"> 
                                 @include('song.indexPassage')
                             </div>
-                        </td>
-                    </tr>
+                        </div>
+                </div>
                 @endforeach
-                </tbody>
-            </table>
             
                 {{--Print the delete form--}}
                 @if(!Auth::guest() && Auth::user()->isAdmin)
@@ -70,7 +66,7 @@
             </div>
         </div>
         
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 External Links
             </div>

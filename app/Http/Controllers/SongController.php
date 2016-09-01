@@ -103,14 +103,14 @@ class SongController extends Controller
         $song = \App\Song::with('album.artist')->where('id',$id)->first();
         
         if($song){
-            /*$song->load(['songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
+            $song->load(['songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
                 $songRefs = $q->orderBy('order')->get()->unique();
-            }]);*/
+            }]);
         }else{
             abort(404);
         }
         
-        return ['song' => $song, 'songRefs' => $song->songRefs];
+        return ['song' => $song, 'songRefs' => $songRefs];
     }
     
     /*private function getSongComments($song){

@@ -3,7 +3,7 @@
 <div class="panel-heading">Comments ({{ count($comments) }})</div>
 <div class="panel-body">
 @if(count($comments))
-<table>
+<table class="table">
     @foreach ($comments as $comment)
     <tr>
         <td class="col-xs-3" valign="top">

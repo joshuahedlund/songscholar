@@ -54,7 +54,7 @@ class HomeController extends Controller
             ->join('artists','songs.artist_id','=','artists.id')
             ->join('passageVersions','songRefs.passageVersion_id','=','passageVersions.id')
             ->join('passages','passageVersions.passage_id','=','passages.id')
-            ->select('songRefs.created_at as dateadded', 'songs.id as songid', 'artists.name as artistname', 'book', 'chapter', 'verse')
+            ->select('songRefs.created_at as dateadded', 'songs.id as songid', 'songs.name as songname', 'artists.name as artistname', 'book', 'chapter', 'verse')
             ->orderBy('songRefs.id','desc')
             ->take(10)
             ->get();
