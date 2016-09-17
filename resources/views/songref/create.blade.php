@@ -4,6 +4,12 @@
 
 @section('content')
 <h2>Add a Song Reference</h2>
+
+@if (Auth::user()->points <= 30)
+<p><a href="javascript:void(0);" class="modalHints">(Read the Hopefully Helpful Hints!)</a></p>
+@endif
+
+
 {{ Form::open(array('route' => 'songrefs.store', 'id' => 'frmAddRef')) }}
 <div class="form-group">
   {{ Form::label('artist','Artist') }}

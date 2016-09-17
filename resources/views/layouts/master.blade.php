@@ -39,6 +39,7 @@ label{font-weight:normal}
                     @if (!Auth::guest())
                     <li>{{HTML::linkAction('SongRefController@create','Add Reference')}}</li>
                     <li><a href="javascript:void(0);" id="modalFeedback">Feedback</a></li>
+                    <li><a href="javascript:void(0);" class="modalHints">Hints</a></li>
                     @endif
                 </ul>
 

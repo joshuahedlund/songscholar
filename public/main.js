@@ -207,6 +207,14 @@ function modalFeedbackSubmit(E){
         $(modal).find('.modal-body').html(t);
     });
 }
+function modalHintsLoad(){
+    $.get('/modal/hints',function(t){
+        modal = $('#myModal');
+        (modal).find('.modal-title').text('Hopefully Helpful Hints');
+        $(modal).find('.modal-body').html(t);
+        $(modal).modal();
+    });
+}
 
 //Comments
 function attachDeleteComment(){
@@ -241,4 +249,5 @@ $(function(){
     $("#frmAddRef").on('submit',validateAddRef);
     $('#ajaxEditSong').on('click',ajaxEditSong);
     $('#modalFeedback').on('click',modalFeedbackLoad);
+    $('.modalHints').on('click',modalHintsLoad);
 });
