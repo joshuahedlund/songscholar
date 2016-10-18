@@ -1,45 +1,30 @@
 @extends('layouts.master')
 
-@section('title', $artist->name)
+@section('title', 'Artists')
 
 @section('content')
         <div class="panel panel-primary">
             <div class="panel-heading panel-title">
-                {{ $artist->name }}
+                Artists
             </div>
 
             <div class="panel-body">
-            @if(count($songs)>0)
+            @if(count($artists)>0)
             <table class="table table-striped task-table">
                 <thead>
-                        <th>Song</th>
-                        <th>Album</th>
-                        <th>Passage</th>
+                        <th>Artist</th>
+                        <th>Songs</th>
                 </thead>
                 <tbody>
-                @foreach ($songs as $song)
+                @foreach ($artists as $artist)
                     <tr>
                         <td class="table-text">
-                            <div> {{ HTML::linkAction('SongController@index',$song->name,$song->id) }} </div>
+                            <div> {{ HTML::linkAction('ArtistController@displayArtist',$artist->artistname,array(str_replace(' ','-',$artist->artistname))) }} </div>
                         </td>
                                 
                         <td>
-                            <div>@if($song->album) {{ $song->album->name }} @endif</div>
+                            <div> {{ $artist->cnt }}</div>
                         </td>
-
-                        <td>
-                            
-                            <div> @if($song->songRefs)
-                                    <?php
-                                    $c='';
-                                    foreach($song->songRefs as $songRef){ //couldn't get comma spacing right with blade templating
-                                        echo $c.$songRef->passageVersion->passage->passageConcat();
-                                        $c=', ';
-                                    }
-                                    ?>
-                                    @endif 
-                            </div>
-                        </td>                        
                     </tr>
                 @endforeach
                 </tbody>

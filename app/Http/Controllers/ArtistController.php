@@ -3,25 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use DB;
 
 class ArtistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($name)
-    {        
+    public function index(){
+        //Get artists with count of songs per artist
+        $artists = DB::table('songs')
+            //->join('albums','songs.album_id','=','albums.id') //cut out middleman to make albums optional
+            ->join('artists','songs.artist_id','=','artists.id')
+            ->select(DB::raw('count(*) as cnt, artists.name as artistname'))
+            ->groupBy('artists.id')
+            ->orderBy('artists.name')
+            ->get();
+        
+        return view('artist.index', ['artists' => $artists]);
+    }
+    
+    public function displayArtist($name){        
         $artist = \App\Artist::where('name',str_replace('-',' ',$name))->first();
         
         $artist->load(['songs' => function ($q) use ( &$songs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
             $songs = $q->orderBy('name')->get()->unique();
         }]);
      
-        return view('artist.index', ['artist' => $artist, 'songs' => $songs]);
+        return view('artist.displayArtist', ['artist' => $artist, 'songs' => $songs]);
     }
     
     public function selectAlbums($artistId){

@@ -15,7 +15,8 @@ Route::auth();
 
 Route::get('/', 'HomeController@index');
 
-Route::get('artist/{name}', 'ArtistController@index');
+Route::get('artist','ArtistController@index');
+Route::get('artist/{name}', 'ArtistController@displayArtist');
 $ajaxGetRoutes = array('selectAlbums','selectSongsByAlbum');
 foreach($ajaxGetRoutes as $ajaxRoute){
     Route::get('artist/{id}/'.$ajaxRoute,'ArtistController@'.$ajaxRoute);

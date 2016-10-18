@@ -2,7 +2,7 @@
 <head>
 <meta charset="utf-8">
 <title>@hasSection('title') @yield('title') - SongRefs @else SongRefs @endif</title>
-<link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <style>
 .xs,.m{display:inline}
 input.xs,select.xs{width:50px}
@@ -36,6 +36,7 @@ label{font-weight:normal}
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
+                    <li>{{HTML::linkAction('ArtistController@index','Artists')}}</li>
                     @if (!Auth::guest())
                     <li>{{HTML::linkAction('SongRefController@create','Add Reference')}}</li>
                     <li><a href="javascript:void(0);" id="modalFeedback">Feedback</a></li>

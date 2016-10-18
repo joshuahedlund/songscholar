@@ -24,10 +24,11 @@
                 <div class="panel-body">
                 @foreach ($artists as $artist)
                     
-                        {{HTML::linkAction('ArtistController@index',$artist->artistname,array(str_replace(' ','-',$artist->artistname))) }}
+                        {{HTML::linkAction('ArtistController@displayArtist',$artist->artistname,array(str_replace(' ','-',$artist->artistname))) }}
                         ({{ $artist->cnt }})
                     <br/>
                 @endforeach
+                <b>{{HTML::linkAction('ArtistController@index','View Full List...')}}</b>
                 </div>
             </div>
         </div>
