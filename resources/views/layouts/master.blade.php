@@ -38,7 +38,6 @@ label{font-weight:normal}
                 <ul class="nav navbar-nav">
                     <li>{{HTML::linkAction('ArtistController@index','Artists')}}</li>
                     @if (!Auth::guest())
-                    <li>{{HTML::linkAction('SongRefController@create','Add Reference')}}</li>
                     <li><a href="javascript:void(0);" id="modalFeedback">Feedback</a></li>
                     <li><a href="javascript:void(0);" class="modalHints">Hints</a></li>
                     @endif

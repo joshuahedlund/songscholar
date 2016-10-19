@@ -25,7 +25,7 @@ class SongRefController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($songId=null)
+    public function create($songId=null,$artistId=null)
     {
         if(!\Auth::check()){
            return redirect('login');
@@ -35,16 +35,32 @@ class SongRefController extends Controller
             $song=\App\Song::where('id',$songId)->first();
             $data['artist_id']=$song->artist_id;
             if($song->album){
-                $data['album']=$song->album->name;
+                $data['album']=$song->album->id;
             }
             $data['song']=$song->name;
+            $data['artist_name']=$song->artist->name;
+        }else if ($artistId){
+            $artist=\App\Artist::where('id',$artistId)->first();
+            if($artist){
+                $data['artist_id']=$artistId;
+                $data['artist_name']=$artist->name;
+            }
+        }
+        
+        if(empty($data['artist_id'])){
+            abort(404);
         }
 
-        //Get data for default create form
-        $data['artists'][-1]='Select Artist';
+        //Get data for create form
+        /*$data['artists'][-1]='Select Artist';
         $artists = \App\Artist::orderBy('name')->get();
         foreach($artists as $artist){$data['artists'][$artist->id]=$artist->name;}
-        $data['artists'][0]='New...';
+        $data['artists'][0]='New...';*/
+        
+        $data['albums'][-1]='Select Album';
+        $albums = \App\Album::where('artist_id',$data['artist_id'])->orderBy('name')->get();
+        foreach($albums as $album){$data['albums'][$album->id]=$album->name;}
+        $data['albums'][0]='New..';
         
         $data['books'][-1]='Select Book';
         $books = \App\Book::orderBy('id')->get();
@@ -61,6 +77,10 @@ class SongRefController extends Controller
     public function add($songId){
         return $this->create($songId);
     }
+    
+    public function addByArtist($artistId){
+        return $this->create(null,$artistId);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -72,7 +92,6 @@ class SongRefController extends Controller
     {
         $this->validate($request, [
             'artist' => 'not_in:-1',
-            'artistname' => 'required_if:artist,0',
              'song' => 'not_in:-1',
              'songname' => 'required_if:song,0|required_without:song',
              'book' => 'required',
@@ -83,12 +102,7 @@ class SongRefController extends Controller
         ],$this->messages());
 
         //Create the stuff
-        if(!empty($request->artistname)){
-            $artist = \App\Artist::firstOrCreate(array('name'=>$request->artistname));
-            $artist->save();
-        }else{
-            $artist = \App\Artist::where(array('id'=>$request->artist))->first();
-        }
+        $artist = \App\Artist::where(array('id'=>$request->artist))->first();
         
         if(!empty($request->albumname)){
             $album = \App\Album::firstOrCreate(array('name'=>$request->albumname,'artist_id'=>$artist->id));

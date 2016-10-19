@@ -1,4 +1,5 @@
-function attachArtistChange(artist){
+/* deprecated - removing artist select from create form */
+/*function attachArtistChange(artist){
     $(artist).change(function(){
         if(this.value==0){ //new
             $(this.form.artistname).show();
@@ -22,7 +23,7 @@ function loadAlbumsByArtist(artistId,frm){
         $('#album').hide();
         $(frm.albumname).show();
     }
-}
+}*/
 function attachAlbumChange(album){
     $(album).change(function(){
         if(this.value==0){
@@ -240,7 +241,7 @@ function ajaxDeleteComment(E){
 //when dom is ready
 $(function(){
     //attach events
-    attachArtistChange($('#artist'));
+    attachAlbumChange($('#album'));
     attachBookChange($('#book'));
     attachChapterChange($('#chapter'));
     attachVerseChange($('#verse'));

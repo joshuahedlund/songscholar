@@ -39,11 +39,15 @@
                                     ?>
                                     @endif 
                             </div>
-                        </td>                        
+                        </td>                   
                     </tr>
                 @endforeach
                 </tbody>
             </table>
+            @endif
+            
+            @if (!Auth::guest())
+                <b>{{ HTML::linkAction('SongRefController@addByArtist','Add A Song Reference',$artist->id) }}</b>
             @endif
             </div>
         </div>

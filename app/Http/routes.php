@@ -16,7 +16,10 @@ Route::auth();
 Route::get('/', 'HomeController@index');
 
 Route::get('artist','ArtistController@index');
+Route::get('add-artist',['as'=>'artist.create','uses'=>'ArtistController@create']);
+Route::post('artist/store','ArtistController@store');
 Route::get('artist/{name}', 'ArtistController@displayArtist');
+Route::resource('artist','ArtistController');
 $ajaxGetRoutes = array('selectAlbums','selectSongsByAlbum');
 foreach($ajaxGetRoutes as $ajaxRoute){
     Route::get('artist/{id}/'.$ajaxRoute,'ArtistController@'.$ajaxRoute);
@@ -38,7 +41,8 @@ Route::post('song/{id}/updateOrder',['as'=>'song.updateOrder','uses'=>'SongContr
 Route::post('song/{id}/updateSong',['as'=>'song.updateSong','uses'=>'SongController@updateSong']);
 
 Route::resource('songrefs','SongRefController');
-Route::get('songref/add/{id}','SongRefController@add');
+Route::get('songref/add/artist/{id}','SongRefController@addByArtist'); //add ref with new song to artist
+Route::get('songref/add/{id}','SongRefController@add'); //add ref to existing song
 Route::post('songref/delete',['as'=>'songRef.delete','uses'=>'SongRefController@delete']);
 
 $ajaxGetRoutes = array('editLyric','indexPassage','editPassageReference','editPassageVersion');

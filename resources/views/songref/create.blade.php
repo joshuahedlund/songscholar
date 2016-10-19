@@ -3,7 +3,7 @@
 @section('title', 'Add a Song Reference')
 
 @section('content')
-<h2>Add a Song Reference</h2>
+<h2>{{ $artist_name }}: Add a Song Reference</h2>
 
 @if (Auth::user()->points <= 30)
 <p><a href="javascript:void(0);" class="modalHints">(Read the Hopefully Helpful Hints!)</a></p>
@@ -11,20 +11,14 @@
 
 
 {{ Form::open(array('route' => 'songrefs.store', 'id' => 'frmAddRef')) }}
-<div class="form-group">
-  {{ Form::label('artist','Artist') }}
-  <div>
-  {{ Form::select('artist', $artists, @$artist_id, array('class' => 'form-control auto')) }}
-  {{ Form::text('artistname', null, array('class' => 'form-control m','style' => 'display:none;')) }}
-  </div>
-</div>
+
+{{ Form::hidden('artist',$artist_id) }}
 <div class="form-group">
   {{ Form::label('album','Album (optional)') }}
   <div>
-  <span id="albumSpan">
-  </span>
-  {{ Form::text('albumname', @$album, array('class' => 'form-control m')) }}
-  </div>
+  {{ Form::select('album', $albums, @$album, array('class' => 'form-control auto','id'=>'album')) }}
+ `{{ Form::text('albumname', null, array('class' => 'form-control m','style' => 'display:none;')) }}
+`</div>
 </div>
 <div class="form-group">
   {{ Form::label('song','Song') }}

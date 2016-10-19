@@ -37,6 +37,7 @@ class HomeController extends Controller
             ->select(DB::raw('count(*) as cnt, artists.name as artistname'))
             ->groupBy('artists.id')
             ->orderBy('cnt','desc')
+            ->orderBy('artists.name')
             ->take(20)
             ->get();
         

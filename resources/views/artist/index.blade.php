@@ -30,6 +30,10 @@
                 </tbody>
             </table>
             @endif
+            
+            @if (!Auth::guest())
+                <b>{{ HTML::link('/add-artist','Add A New Artist') }}</b>
+            @endif
             </div>
         </div>
 @endsection
