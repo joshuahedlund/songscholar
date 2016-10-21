@@ -14,7 +14,7 @@
                 <thead>
                         <th>Song</th>
                         <th>Album</th>
-                        <th>Passage</th>
+                        <th class="text-right">Comments</th>
                 </thead>
                 <tbody>
                 @foreach ($songs as $song)
@@ -24,20 +24,13 @@
                         </td>
                                 
                         <td>
-                            <div>@if($song->album) {{ $song->album->name }} @endif</div>
+                            <div>@if($song->albumname) {{ $song->albumname }} @endif</div>
                         </td>
 
-                        <td>
+                        <td class="text-right">
                             
-                            <div> @if($song->songRefs)
-                                    <?php
-                                    $c='';
-                                    foreach($song->songRefs as $songRef){ //couldn't get comma spacing right with blade templating
-                                        echo $c.$songRef->passageVersion->passage->passageConcat();
-                                        $c=', ';
-                                    }
-                                    ?>
-                                    @endif 
+                            <div>
+                                {{ $song->cnt_comment }}
                             </div>
                         </td>                   
                     </tr>

@@ -39,7 +39,7 @@ class HomeController extends Controller
             ->orderBy('cnt','desc')
             ->orderBy('artists.name')
             ->take(20)
-            ->get();
+            ->get();            
         
         //Get books with count of song references per book
         $books = DB::table('songRefs')

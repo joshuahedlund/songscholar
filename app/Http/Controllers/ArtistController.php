@@ -25,9 +25,19 @@ class ArtistController extends Controller
         $artist = \App\Artist::where('name',str_replace('-',' ',$name))->first();
         
         if($artist){
+            $songs = DB::table('songs')
+                ->leftJoin('albums','songs.album_id','=','albums.id')
+                ->leftJoin('comments','comments.song_id','=','songs.id')
+                ->select(DB::raw('songs.name, songs.id, albums.name as albumname, count(comments.id) as cnt_comment'))
+                ->where('songs.artist_id','=',$artist->id)
+                ->groupBy('songs.id')
+                ->orderBy('songs.name')
+                ->get();
+            
+            /*$songs = \App\Song::where('artist_id','=',$artist->id);
             $artist->load(['songs' => function ($q) use ( &$songs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
                 $songs = $q->orderBy('name')->get()->unique();
-            }]);
+            }]);*/
         }else{
             abort(404);
         }
