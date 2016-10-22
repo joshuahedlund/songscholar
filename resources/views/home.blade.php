@@ -16,24 +16,6 @@
             
     <div class="row">
             
-        @if (count($artists)>0)
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">View References by Artist</div>
-
-                <div class="panel-body">
-                @foreach ($artists as $artist)
-                    
-                        {{HTML::linkAction('ArtistController@displayArtist',$artist->artistname,array(str_replace(' ','-',$artist->artistname))) }}
-                        ({{ $artist->cnt }})
-                    <br/>
-                @endforeach
-                <b>{{HTML::linkAction('ArtistController@index','View Full List...')}}</b>
-                </div>
-            </div>
-        </div>
-        @endif
-            
         @if (count($books)>0)
         <div class="col-md-3">
             <div class="panel panel-default">
@@ -51,8 +33,42 @@
         </div>
         @endif
             
+        
+        @if (count($artists)>0)
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">View References by Artist</div>
+
+                <div class="panel-body">
+                @foreach ($artists as $artist)
+                    
+                        {{HTML::linkAction('ArtistController@displayArtist',$artist->artistname,array(str_replace(' ','-',$artist->artistname))) }}
+                        ({{ $artist->cnt }})
+                    <br/>
+                @endforeach
+                <b>{{HTML::linkAction('ArtistController@index','View Full List...')}}</b>
+                </div>
+            </div>
+        </div>
+        @endif
+            
+        <div class="col-md-6">        
+        @if (count($newComments)>0)
+            <div class="panel panel-default">
+                <div class="panel-heading">New Comments</div>
+                <div class="panel-body">
+                @foreach ($newComments as $comment)
+                    <p>
+                        {{HTML::linkAction('SongController@index',$comment->songname.' - '.$comment->artistname,$comment->songid) }}
+                        <br/>
+                         ({{date('m/d/y h:i a',strtotime($comment->created_at))}} by {{$comment->name}})
+                    </p>
+                @endforeach
+                </div>
+            </div>
+        @endif
+        
         @if (count($newRefs)>0)
-        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">New References</div>
                 <div class="panel-body">
@@ -60,13 +76,13 @@
                     <p>
                         {{HTML::linkAction('SongController@index',$newRef->songname.' - '.$newRef->artistname,$newRef->songid) }}
                         <br/><b>{{$newRef->book.' '.$newRef->chapter.':'.$newRef->verse}}</b>
-                         (added {{date('m/d/y',strtotime($newRef->dateadded))}})
+                         ({{date('m/d/y',strtotime($newRef->dateadded))}} by {{$newRef->username}})
                     </p>
                 @endforeach
                 </div>
             </div>
-        </div>
         @endif
+        </div>        
     </div>
 </div>
 @endsection
