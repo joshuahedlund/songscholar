@@ -33,6 +33,8 @@ Route::get('book/{name}/{ch}/{v}/editPassageVersionFields','BookController@editP
 Route::get('modal/{modalname}',function($modalname){ return View::make('modal/'.$modalname);});
 Route::post('modal/feedback','ModalController@storeFeedback');
 
+Route::get('search','SearchController@index');
+
 Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
 Route::get('song/{id}/order','SongController@editOrder');
 Route::get('song/{id}/edit','SongController@editSong');

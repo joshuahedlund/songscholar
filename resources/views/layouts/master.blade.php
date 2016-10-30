@@ -42,9 +42,24 @@ label{font-weight:normal}
                     <li><a href="javascript:void(0);" class="modalHints">Hints</a></li>
                     @endif
                 </ul>
+                
+                <!-- Center of Navbar -->
+                
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form action="/search/" method="get" class="navbar-form">
+                        <div class="input-group">
+                            <input type="search" name="search" class="form-control" />
+                            <div class="input-group-btn">
+                                <button class="btn btn-info">
+                                <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
