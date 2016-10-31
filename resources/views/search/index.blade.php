@@ -32,5 +32,19 @@
                 </div>
             </div>
             @endif
+            
+            @if(count($songRefs)>0)
+           <div class="panel panel-default">
+                <div class="panel-heading">Song References</div>
+
+                <div class="panel-body">
+                @foreach($songRefs as $songRef)
+                <p>{{HTML::linkAction('SongController@index',$songRef->songname.' - '.$songRef->artistname,$songRef->songid) }}<br/>
+                "{{$songRef->lyric}}"
+                </p>
+                @endforeach
+                </div>
+            </div>
+            @endif
            
 @endsection

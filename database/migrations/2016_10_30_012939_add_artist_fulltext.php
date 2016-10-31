@@ -23,6 +23,7 @@ class AddArtistFulltext extends Migration
      */
     public function down()
     {
-        //
+        DB::statement('DROP INDEX search ON artists');
+        DB::statement('DROP INDEX search ON songs');
     }
 }
