@@ -8,7 +8,15 @@
                 <div class="panel-heading panel-title">Welcome!</div>
 
                 <div class="panel-body">
-                    <p>SongRefs is a database of song lyrics that reference Bible verses. <a href="/register">Create an account</a> to contribute!</p>
+                    <img src="/img/songRefs.png" style="float:left;">
+                    <p>
+                        SongRefs is a database of song lyrics that reference Bible verses.
+                        @if(Auth::guest())
+                            <a href="/register">Create an account</a> to contribute!
+                        @else
+                            {{HTML::linkAction('ArtistController@index','Find an artist')}} and add a reference!
+                        @endif
+                    </p>
                 </div>
             </div>
         </div>

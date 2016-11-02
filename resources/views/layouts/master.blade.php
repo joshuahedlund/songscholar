@@ -53,7 +53,7 @@ label{font-weight:normal}
                         <div class="input-group">
                             <input type="search" name="search" class="form-control" />
                             <div class="input-group-btn">
-                                <button class="btn btn-info">
+                                <button class="form-control btn btn-info">
                                 <span class="glyphicon glyphicon-search"></span>
                                 </button>
                             </div>
