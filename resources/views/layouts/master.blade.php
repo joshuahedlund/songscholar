@@ -1,6 +1,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta property="og:image" content="/img/songRefs.png" />
 <title>@hasSection('title') @yield('title') - SongRefs @else SongRefs @endif</title>
 <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <style>
