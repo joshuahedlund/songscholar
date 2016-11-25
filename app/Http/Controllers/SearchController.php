@@ -36,7 +36,7 @@ class SearchController extends Controller
         //Search for book, either original string or with chapter popped off
         $book = \App\Book::where('name',$searchBook)->first();
         if($book){
-            $bookUrl = '/book/'.str_replace(' ','-',$book->name);
+            $bookUrl = '/book/'.$book->getUrlName();
             if($searchCh){
                 $bookUrl .= '/'.$searchCh;
             }
@@ -64,6 +64,12 @@ class SearchController extends Controller
             ->orderBy('score','desc')
             ->get();
         $cntRefs = count($data['songRefs']);
+        
+        //If 1 artist and no other results, go direct to artist
+        if($cntArtist==1 && $cntSongs==0 && $cntRefs==0){
+            $artist = $data['artists'][0];
+            return redirect('/artist/'.$artist->getUrlName());
+        }
         
         return view('search.index', $data);
     }

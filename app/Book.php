@@ -15,4 +15,9 @@ class Book extends Model
         $maxVerse = \DB::table('passages')->where('book',$bookName)->where('chapter',$ch)->max('verse');
         return $maxVerse;
     }
+    
+    /* returns url friendly version of name with hyphens replacing spaces */
+    public function getUrlName(){
+        return str_replace(' ','-',$this->name);
+    }
 }

@@ -16,4 +16,9 @@ class Artist extends Model
         //return $this->hasManyThrough('App\Song','App\Album'); //allow optional albums
         return $this->hasMany('App\Song');
     }
+    
+    /* returns url friendly version of name with hyphens replacing spaces */
+    public function getUrlName(){
+        return str_replace(' ','-',$this->name);
+    }
 }
