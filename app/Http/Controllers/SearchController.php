@@ -73,7 +73,7 @@ class SearchController extends Controller
             }else if ($cntArtist>1){ //if more than one
                 //see if one is an exact match
                 foreach($data['artists'] as $artist){
-                    if($artist->name == $request->search){
+                    if(strtolower($artist->name) == strtolower($request->search)){
                         return redirect('/artist/'.$artist->getUrlName());
                     }
                 }

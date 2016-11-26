@@ -46,7 +46,9 @@
             @endif
             
             @if (!Auth::guest())
+            <p>
                 <b>{{ HTML::link('/add-artist','Add A New Artist') }}</b>
+            </p>
             @endif
             </div>
         </div>
