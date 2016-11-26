@@ -8,17 +8,32 @@ use DB;
 
 class ArtistController extends Controller
 {
-    public function index(){
+    public function index($filterL=null){
         //Get artists with count of songs per artist
-        $artists = DB::table('artists')
+        $artistQuery = DB::table('artists')
             //->join('albums','songs.album_id','=','albums.id') //cut out middleman to make albums optional
             ->leftJoin('songs','songs.artist_id','=','artists.id')
-            ->select(DB::raw('count(songs.id) as cnt, artists.name as artistname'))
-            ->groupBy('artists.id')
+            ->select(DB::raw('count(songs.id) as cnt, artists.name as artistname'));
+        if($filterL){
+            $artistQuery->whereRaw('substring(artists.name,1,1)=:letter',['letter'=>$filterL]);
+        }
+        $artists = $artistQuery->groupBy('artists.id')
+            ->orderBy('artists.name')
+            //->get();
+            ->paginate(20);
+            
+        $distinctLetters = DB::table('artists')
+            ->select(DB::raw('substring(name,1,1) as letter'))
+            ->groupBy(DB::raw('substring(name,1,1)'))
             ->orderBy('artists.name')
             ->get();
         
-        return view('artist.index', ['artists' => $artists]);
+        return view('artist.index', ['artists' => $artists, 'letters' => $distinctLetters, 'filterL'=>$filterL]);
+    }
+    
+    //Get artists filtered by letter (use separate function for routing distinction)
+    public function indexFiltered($filterL){
+        return $this->index($filterL);
     }
     
     public function displayArtist($name){        

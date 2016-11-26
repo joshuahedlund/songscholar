@@ -15,10 +15,11 @@ Route::auth();
 
 Route::get('/', 'HomeController@index');
 
-Route::get('artist','ArtistController@index');
+Route::get('artist/','ArtistController@index');
+Route::get('artist/filter/{filterL}/','ArtistController@indexFiltered');
 Route::get('add-artist',['as'=>'artist.create','uses'=>'ArtistController@create']);
 Route::post('artist/store','ArtistController@store');
-Route::get('artist/{name}', 'ArtistController@displayArtist');
+Route::get('artist/{name}/', 'ArtistController@displayArtist');
 Route::resource('artist','ArtistController');
 $ajaxGetRoutes = array('selectAlbums','selectSongsByAlbum');
 foreach($ajaxGetRoutes as $ajaxRoute){

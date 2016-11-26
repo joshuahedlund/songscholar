@@ -10,6 +10,18 @@
 
             <div class="panel-body">
             @if(count($artists)>0)
+                <p>
+                        @foreach($letters as $l)
+                            &nbsp; 
+                            @if(!is_null($filterL) && $filterL==$l->letter)
+                                <b>{{$l->letter}}</b>
+                            @else
+                                {{ HTML::linkAction('ArtistController@indexFiltered',$l->letter,[$l->letter]) }}
+                            @endif
+                        @endforeach
+                    </p>
+            
+            
             <table class="table table-striped task-table">
                 <thead>
                         <th>Artist</th>
@@ -29,6 +41,8 @@
                 @endforeach
                 </tbody>
             </table>
+            
+            {{ $artists->links() }}
             @endif
             
             @if (!Auth::guest())

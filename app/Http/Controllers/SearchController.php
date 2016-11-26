@@ -65,10 +65,19 @@ class SearchController extends Controller
             ->get();
         $cntRefs = count($data['songRefs']);
         
-        //If 1 artist and no other results, go direct to artist
-        if($cntArtist==1 && $cntSongs==0 && $cntRefs==0){
-            $artist = $data['artists'][0];
-            return redirect('/artist/'.$artist->getUrlName());
+        //If artist result(s) and no other results, see if we can go directly
+        if($cntArtist>=1 && $cntSongs==0 && $cntRefs==0){
+            if($cntArtist==1){ //if one artist go to that artist
+                $artist = $data['artists'][0];
+                return redirect('/artist/'.$artist->getUrlName());
+            }else if ($cntArtist>1){ //if more than one
+                //see if one is an exact match
+                foreach($data['artists'] as $artist){
+                    if($artist->name == $request->search){
+                        return redirect('/artist/'.$artist->getUrlName());
+                    }
+                }
+            }
         }
         
         return view('search.index', $data);
