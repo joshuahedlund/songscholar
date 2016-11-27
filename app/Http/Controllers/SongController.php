@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use DB;
 
 class SongController extends Controller
 {
@@ -62,6 +63,48 @@ class SongController extends Controller
             abort(404);
         }
 
+        return redirect('/song/'.$songId);
+    }
+    
+    /** edit song associated artists */
+    public function editSongAssoc($id){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $song = \App\Song::where('id',$id)->first();
+        
+        if($song){
+            $data['song'] = $song;
+            return view('song.editSongAssoc', $data);
+        }else{
+            abort(404);
+        }
+    }
+    public function updateSongAssoc($songId, Request $request){
+        if(!\Auth::check()){
+           return redirect('login');
+        }
+        
+        $song = \App\Song::where('id',$songId)->first();
+        $user = $request->user();
+        
+        if($song){
+            if(!empty($request->artist)){
+                $artist = \App\Artist::firstOrCreate(['name'=>$request->artist]);
+                if($artist){
+                    $artist->save();
+                    DB::table('associatedArtists')->insert(
+                        ['song_id'=>$songId,
+                        'artist_id'=>$artist->id,
+                        'createdBy'=>$user->id]
+                    );
+                }
+            }
+        }else{
+            abort(404);
+        }
+        
         return redirect('/song/'.$songId);
     }
     

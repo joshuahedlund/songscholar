@@ -147,6 +147,12 @@ function ajaxEditSong(E){
         $('#editSong-'+songId).html(t);
     });
 }
+function ajaxEditSongAssoc(E){
+    var songId = $(E.target).data('song-id');
+    $.get('/song/'+songId+'/editAssoc',function(t){
+        $('#editSongAssoc-'+songId).html(t);
+    });
+}
 function ajaxEditLyric(songRefId){
     $.get('/songRef/'+songRefId+'/editLyric',function(t){
         $('#editLyric-'+songRefId).html(t);
@@ -249,6 +255,7 @@ $(function(){
     
     $("#frmAddRef").on('submit',validateAddRef);
     $('#ajaxEditSong').on('click',ajaxEditSong);
+    $('#ajaxEditSongAssoc').on('click',ajaxEditSongAssoc);
     $('#modalFeedback').on('click',modalFeedbackLoad);
     $('.modalHints').on('click',modalHintsLoad);
 });

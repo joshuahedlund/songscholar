@@ -40,5 +40,8 @@
     
     {{ Form::button('Add Comment', array('class' => 'btn btn-default','onclick'=>'ajaxAddComment(this.form);')) }}
     {{ Form::close() }}
+@else
+    <p><a href="/login">Login to add a comment</a></p>
+
 @endif
 </div>

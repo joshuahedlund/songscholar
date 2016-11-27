@@ -39,9 +39,12 @@ Route::get('search','SearchController@index');
 Route::get('song/{id}',array('as'=>'song','uses'=>'SongController@index'));
 Route::get('song/{id}/order','SongController@editOrder');
 Route::get('song/{id}/edit','SongController@editSong');
+Route::get('song/{id}/editAssoc','SongController@editSongAssoc');
 Route::get('song/{id}/comments','CommentController@index');
-Route::post('song/{id}/updateOrder',['as'=>'song.updateOrder','uses'=>'SongController@updateOrder']);
-Route::post('song/{id}/updateSong',['as'=>'song.updateSong','uses'=>'SongController@updateSong']);
+$ajaxPostRoutes = ['updateOrder','updateSong','updateSongAssoc'];
+foreach($ajaxPostRoutes as $ajaxRoute){
+    Route::post('song/{id}/'.$ajaxRoute,['as'=>'song.'.$ajaxRoute,'uses'=>'SongController@'.$ajaxRoute]);
+}
 
 Route::resource('songrefs','SongRefController');
 Route::get('songref/add/artist/{id}','SongRefController@addByArtist'); //add ref with new song to artist

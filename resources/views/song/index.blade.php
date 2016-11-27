@@ -10,7 +10,8 @@
 
             <div class="panel-body">
             @if (!Auth::guest())
-            <p id="editSong-{{$song->id}}"><a href="javascript:void(0);" id="ajaxEditSong" data-song-id="{{$song->id}}">Edit song details</a></p>
+                <p id="editSong-{{$song->id}}"><a href="javascript:void(0);" id="ajaxEditSong" data-song-id="{{$song->id}}">Edit song details</a></p>
+                <p id="editSongAssoc-{{$song->id}}"><a href="javascript:void(0);" id="ajaxEditSongAssoc" data-song-id="{{$song->id}}">Edit song associations</a></p>
             @endif
             
             @if(count($song->songRefs)>0)
