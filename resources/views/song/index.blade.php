@@ -14,6 +14,17 @@
                 <p id="editSongAssoc-{{$song->id}}"><a href="javascript:void(0);" id="ajaxEditSongAssoc" data-song-id="{{$song->id}}">Edit song associations</a></p>
             @endif
             
+            @if(count($assocArtists)>0)
+                <p>
+                    Also associated with this song:
+                    <?php $c=''; ?>
+                    @foreach($assocArtists as $artist)
+                    {{$c}}{{HTML::linkAction('ArtistController@displayArtist',$artist, str_replace(' ','-',$artist))}}
+                        <?php $c='| '; /*add comma between each entry*/ ?> 
+                    @endforeach
+                </p>
+            @endif
+            
             @if(count($song->songRefs)>0)
             <div class="row">
                         <div class="col-sm-6"><b>Lyric</b></div>

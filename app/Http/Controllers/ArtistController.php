@@ -8,12 +8,14 @@ use DB;
 
 class ArtistController extends Controller
 {
-    public function index($filterL=null){
+    public function index($filterL=null){        
         //Get artists with count of songs per artist
         $artistQuery = DB::table('artists')
             //->join('albums','songs.album_id','=','albums.id') //cut out middleman to make albums optional
-            ->leftJoin('songs','songs.artist_id','=','artists.id')
-            ->select(DB::raw('count(songs.id) as cnt, artists.name as artistname'));
+            ->leftJoin('songs','songs.artist_id','=','artists.id') //songs directly linked to artists
+            ->leftJoin('associatedArtists','associatedArtists.artist_id','=','artists.id')
+            ->leftJoin('songs as s2','s2.id','=','associatedArtists.song_id') //songs linked as associated aritsts
+            ->select(DB::raw('(count(songs.id) + count(s2.id)) as cnt, artists.name as artistname'));
         if($filterL){
             $artistQuery->whereRaw('substring(artists.name,1,1)=:letter',['letter'=>$filterL]);
         }
@@ -36,15 +38,19 @@ class ArtistController extends Controller
         return $this->index($filterL);
     }
     
-    public function displayArtist($name){        
+    public function displayArtist($name){                
         $artist = \App\Artist::where('name',str_replace('-',' ',$name))->first();
         
         if($artist){
             $songs = DB::table('songs')
                 ->leftJoin('albums','songs.album_id','=','albums.id')
+                ->leftJoin('associatedArtists','associatedArtists.song_id','=','songs.id')
                 ->leftJoin('comments','comments.song_id','=','songs.id')
                 ->select(DB::raw('songs.name, songs.id, albums.name as albumname, count(comments.id) as cnt_comment'))
-                ->where('songs.artist_id','=',$artist->id)
+                ->where(function ($query) use ($artist) {
+                $query->where('songs.artist_id','=',$artist->id)
+                      ->orWhere('associatedArtists.artist_id', '=', $artist->id);
+                })
                 ->groupBy('songs.id')
                 ->orderBy('songs.name')
                 ->get();

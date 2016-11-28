@@ -76,6 +76,9 @@ class SongController extends Controller
         
         if($song){
             $data['song'] = $song;
+            
+            $data['artists'] = $this->getAssociatedArtists($id);
+            
             return view('song.editSongAssoc', $data);
         }else{
             abort(404);
@@ -144,16 +147,34 @@ class SongController extends Controller
     
     private function getSongAndRefs($id){
         $song = \App\Song::with('album.artist')->where('id',$id)->first();
+        $assocArtists = [];
         
         if($song){
             $song->load(['songRefs' => function ($q) use ( &$songRefs ) { //from https://softonsofa.com/laravel-querying-any-level-far-relations-with-simple-trick/
                 $songRefs = $q->orderBy('order')->get()->unique();
             }]);
+            
+            $assocArtists = $this->getAssociatedArtists($id);
         }else{
             abort(404);
         }
         
-        return ['song' => $song, 'songRefs' => $songRefs];
+        return ['song' => $song, 'songRefs' => $songRefs, 'assocArtists' => $assocArtists];
+    }
+    
+    private function getAssociatedArtists($songId){
+        $assocArtists = [];
+        $assocArtistRows = DB::table('associatedArtists')
+                ->join('artists','associatedArtists.artist_id','=','artists.id')
+                ->select('artists.name as artistname')
+                ->where('song_id',$songId)
+                ->get();
+            if(!empty($assocArtistRows)){ //extract names and pass as specific array
+                foreach($assocArtistRows as $assocArtistRow){
+                    $assocArtists[] = $assocArtistRow->artistname;
+                }
+            }
+        return $assocArtists;
     }
     
     /*private function getSongComments($song){
