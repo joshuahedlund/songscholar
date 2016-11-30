@@ -1,6 +1,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta property="og:image" content="http://ec2-54-165-116-38.compute-1.amazonaws.com/img/songRefs.png" />
 <title>@hasSection('title') @yield('title') - SongRefs @else SongRefs @endif</title>
 <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
