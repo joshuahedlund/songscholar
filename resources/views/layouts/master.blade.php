@@ -6,7 +6,9 @@
 <title>@hasSection('title') @yield('title') - SongRefs @else SongRefs @endif</title>
 <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <style>
-input, select, textarea{font-size: 16px;}/*prevent zoom on mobile*/
+@media screen and (max-width: 800px){
+input, select, textarea{font-size: 16px !important;}/*prevent zoom on mobile*/
+}
 .xs,.m{display:inline}
 input.xs,select.xs{width:50px}
 input.m{width:100%;max-width:300px}
